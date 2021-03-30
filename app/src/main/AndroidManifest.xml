@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticaPiS">
         <activity
+            android:name=".registerActivity"
+            android:parentActivityName=".MainActivity"
+            />
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.PracticaPiS.NoActionBar">

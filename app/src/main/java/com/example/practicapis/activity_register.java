@@ -10,7 +10,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class registerActivity extends AppCompatActivity {
+public class activity_register extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

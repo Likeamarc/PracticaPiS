@@ -10,4 +10,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="SignUp">SIGN UP</string>
+    <string name="Socials">or use any of your social profiles</string>
+    <string name="Twitter">Twitter</string>
+    <string name="Facebook">Facebook</string>
 </resources>

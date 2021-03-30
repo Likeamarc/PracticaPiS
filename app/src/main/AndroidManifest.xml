@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PracticaPiS">
         <activity
-            android:name=".registerActivity"
+            android:name=".activity_register"
             android:parentActivityName=".MainActivity"
             />
         <activity

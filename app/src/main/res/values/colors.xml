@@ -10,6 +10,7 @@
     <color name="textbody">#ff4c4c</color>
     <color name="twitterBlue">#1DA1F2</color>
     <color name="facebookBlue">#4267B2</color>
+    <color name="gray">#808080</color>
 
 
 </resources>

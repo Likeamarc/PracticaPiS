@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,27 +13,166 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+
+    <TextView
+        android:id="@+id/NoteText"
+        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_below = "@id/toolbar"
+        android:textStyle="bold"
+        android:layout_marginLeft="61dp"
+        android:text="NOTE"
+        android:textColor="@color/textbody"
+        android:textSize="50dp"
+        />
 
-    <Button
-        android:id="@+id/button_third"
+    <TextView
+        android:id="@+id/olvidesText"
+        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="register" />
+        android:layout_below = "@id/toolbar"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/NoteText"
+        android:layout_marginRight="61dp"
+        android:text="olvides"
+        android:textColor="@color/black"
+        android:textSize="50dp"
+        />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/white"
         app:popupTheme="@style/Theme.PracticaPiS.PopupOverlay" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <TextView
+        android:id="@+id/SignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:layout_below="@id/NoteText"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="@string/SignIn"
+
+        />
+
+    <TextView
+        android:id="@+id/usernameTextSign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SignIn"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/textbody"
+        android:text="Username / Email"
+        />
+
+    <EditText
+        android:id="@+id/userSign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="example@email.com / UsernameEx"
+        android:layout_below="@id/usernameTextSign"
+        />
+
+    <TextView
+        android:id="@+id/passwordTextSign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userSign"
+        android:layout_marginLeft="50dp"
+        android:textColor="@color/textbody"
+        android:text="Password"
+        />
+
+    <EditText
+        android:id="@+id/passwordSign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="**********"
+        android:layout_below="@id/passwordTextSign"
+        />
+    <Button
+        android:id="@+id/SignInButton"
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+        android:background="@color/textbody"
+        android:textColor="@color/white"
+        android:text = "@string/SignUp"
+        android:textStyle="bold"
+        android:layout_below="@id/passwordSign"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:id="@+id/socialsS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Socials"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/SignInButton"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:id="@+id/TwitterButtonS"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/socialsS"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/twitterBlue"
+        android:text="@string/Twitter"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/facebookButtonS"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/socialsS"
+        android:layout_toRightOf="@id/TwitterButtonS"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/facebookBlue"
+        android:text="@string/Facebook"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/facebookButtonS"
+        android:background="@color/white"
+        android:textColor="@color/textbody"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="270dp"
+        android:text="@string/SignIn" />
+
+    <Button
+        android:id="@+id/buttonForgotPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/facebookButtonS"
+        android:background="@color/white"
+        android:textColor="@color/gray"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp"
+        android:text="Forgot Password?" />
+
+</RelativeLayout>

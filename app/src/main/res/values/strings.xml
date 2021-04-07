@@ -14,4 +14,6 @@
     <string name="Twitter">Twitter</string>
     <string name="Facebook">Facebook</string>
     <string name="SignIn">SIGN IN</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

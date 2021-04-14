@@ -22,39 +22,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+
 
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Button button;
+        Button buttonRegister, buttonSingIn;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.homescreen);
 
-        ArrayList<ExampleItem> exampleList = new ArrayList<>();
-        exampleList.add(new ExampleItem(R.drawable.ic_baseline_camera_alt_24, "Camera Note", "Description"));
-        exampleList.add(new ExampleItem(R.drawable.ic_baseline_speaker_24, "Sound Note", "Description"));
-        exampleList.add(new ExampleItem(R.drawable.ic_baseline_pending_24, "Text Note", "Description"));
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        buttonRegister = findViewById(R.id.buttonRegister);
+        buttonSingIn = findViewById(R.id.SignInButton);
 
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new Adapter(exampleList);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-       // button = findViewById(R.id.buttonRegister);
+        buttonSingIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, HomePage.class));
+            }
+        });
 
-        /*button.setOnClickListener(new View.OnClickListener() {
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, activity_register.class));
             }
-        });*/
+        });
 
     }
 

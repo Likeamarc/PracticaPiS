@@ -29,9 +29,21 @@ public class HomePage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FloatingActionButton addNote;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
+
+
+        addNote = findViewById(R.id.addNoteButton);
+
+        addNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(
+                        new Intent(getApplicationContext(), new_note.class));
+            }
+        });
 
         ArrayList<ExampleItem> exampleList = new ArrayList<>();
         exampleList.add(new ExampleItem(R.drawable.ic_baseline_camera_alt_24, "Camera Note", "Description"));

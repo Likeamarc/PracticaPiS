@@ -1,16 +1,20 @@
-package com.example.practicapis;
+package com.example.practicapis.activities;
 
-import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.practicapis.R;
+
 public class activity_register extends AppCompatActivity {
+
+    public static final int REQUEST_USER_PASWORD = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,16 @@ public class activity_register extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarRegist);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Button buttonSignUp = findViewById(R.id.SignUpButton);
+
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(activity_register.this, HomePage.class),
+                        REQUEST_USER_PASWORD);
+            }
+        });
 
 
     }

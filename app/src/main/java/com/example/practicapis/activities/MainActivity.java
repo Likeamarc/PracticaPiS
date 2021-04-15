@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         buttonRegister = findViewById(R.id.buttonRegister);
         buttonSingIn = findViewById(R.id.SignInButton);
 

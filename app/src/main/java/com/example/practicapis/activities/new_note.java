@@ -19,11 +19,6 @@ public class new_note extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ImageView imageBack = findViewById(R.id.imageBack);
-        imageBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        imageBack.setOnClickListener(v -> onBackPressed());
     }
 }

@@ -18,13 +18,11 @@ import com.example.practicapis.R;
 public class MainActivity extends AppCompatActivity {
 
 
-    public static final int REQUEST_USER_PASWORD = 1;
-
-
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Button buttonRegister, buttonSingIn;
+        setContentView(R.layout.activity_main);
 
         super.onCreate(savedInstanceState);
 
@@ -34,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSingIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(MainActivity.this, HomePage.class),
-                        REQUEST_USER_PASWORD);
+                startActivity(new Intent(MainActivity.this, HomePage.class));
             }
         });
 

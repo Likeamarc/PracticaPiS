@@ -25,6 +25,7 @@ public class HomePage extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private static final int REQUEST_CODE_ADD_NOTE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,9 @@ public class HomePage extends AppCompatActivity {
         addNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(
-                        new Intent(getApplicationContext(), new_note.class));
+                startActivityForResult(
+                        new Intent(HomePage.this, new_note.class),
+                        REQUEST_CODE_ADD_NOTE);
             }
         });
 
@@ -71,7 +73,7 @@ public class HomePage extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<Note> notes) {
                 super.onPostExecute(notes);
-                Log.d("My Notes", notes.toString());
+                Log.d("MY_NOTES", notes.toString());
             }
         }
         new getNotesText().execute();

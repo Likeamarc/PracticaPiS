@@ -58,6 +58,7 @@ public class new_note extends AppCompatActivity {
         final Note note = new Note();
         note.setTitle(inputTitle.getText().toString());
         note.setNoteText(inputText.getText().toString());
+        note.setDateTime(dateTime.getText().toString());
 
 
         @SuppressLint("StaticFieldLeak")

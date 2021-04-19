@@ -13,6 +13,8 @@
     <color name="gray">#808080</color>
     <color name="background_note">#696969</color>
     <color name="editNote">#C0C0C0</color>
+    <color name="colorMiscellaneousBackground">#191919</color>
+    <color name="backgroundNote4">#FFFF33</color>
 
 
 </resources>

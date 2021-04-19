@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.example.practicapis.Adapter;
-import com.example.practicapis.ExampleItem;
 import com.example.practicapis.R;
 import com.example.practicapis.adapters.NotesAdapter;
 import com.example.practicapis.database.NoteDatabase;

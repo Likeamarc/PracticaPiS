@@ -7,14 +7,20 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
 
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.practicapis.R;
+import com.example.practicapis.databinding.ActivityMainBinding;
+import com.example.practicapis.viewmodel.LoginViewModel;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,20 +28,17 @@ public class MainActivity extends AppCompatActivity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button buttonRegister, buttonSingIn;
-        setContentView(R.layout.activity_main);
+        Button buttonRegister;
 
         super.onCreate(savedInstanceState);
 
+        //Esto sigue como antes, lo dejo asi para que se vea la diferencia y luego l ocambiamos
         buttonRegister = findViewById(R.id.buttonRegister);
-        buttonSingIn = findViewById(R.id.SignInButton);
+        //buttonSingIn = findViewById(R.id.SignInButton); Esto esta hecho con el MVVML
 
-        buttonSingIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, HomePage.class));
-            }
-        });
+        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        activityMainBinding.setViewModel(new LoginViewModel());
+        activityMainBinding.executePendingBindings();
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @BindingAdapter({"toastMessage"})
+    public static void runMe( View view, String message) {
+        if (message != null)
+            Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 

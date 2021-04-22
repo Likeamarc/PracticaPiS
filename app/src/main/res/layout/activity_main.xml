@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".activities.MainActivity">
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.practicapis.viewmodel.LoginViewModel" />
+    </data>
+
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -73,6 +80,7 @@
         android:layout_marginRight="50dp"
         android:hint="example@email.com / UsernameEx"
         android:layout_below="@id/usernameTextSign"
+        android:text="@{viewModel.userEmail}"
         />
 
     <TextView
@@ -93,6 +101,7 @@
         android:layout_marginRight="50dp"
         android:hint="**********"
         android:layout_below="@id/passwordTextSign"
+        android:text="@{viewModel.userPassword}"
         />
     <Button
         android:id="@+id/SignInButton"
@@ -105,6 +114,9 @@
         android:layout_below="@id/passwordSign"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:onClick="@{()-> viewModel.onButtonClicked()}"
+        bind:toastMessage="@{viewModel.toastMessage}"
+
         />
     <TextView
         android:id="@+id/socialsS"
@@ -167,3 +179,4 @@
         android:text="Forgot Password?" />
 
 </RelativeLayout>
+</layout>

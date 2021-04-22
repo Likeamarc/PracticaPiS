@@ -21,12 +21,11 @@
         android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below = "@id/toolbar"
         android:textStyle="bold"
-        android:layout_marginLeft="61dp"
+        android:layout_marginLeft="80dp"
         android:text="NOTE"
         android:textColor="@color/textbody"
-        android:textSize="50dp"
+        android:textSize="40sp"
         />
 
     <TextView
@@ -34,28 +33,20 @@
         android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below = "@id/toolbar"
         android:textStyle="bold"
         android:layout_toRightOf="@id/NoteText"
-        android:layout_marginRight="61dp"
+        android:layout_marginRight="80dp"
         android:text="olvides"
         android:textColor="@color/black"
-        android:textSize="50dp"
+        android:textSize="40sp"
         />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:popupTheme="@style/Theme.PracticaPiS.PopupOverlay" />
 
     <TextView
         android:id="@+id/SignIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:textSize="25dp"
         android:layout_below="@id/NoteText"
         android:textStyle="bold"
@@ -63,7 +54,6 @@
         android:text="@string/SignIn"
 
         />
-
     <TextView
         android:id="@+id/usernameTextSign"
         android:layout_width="match_parent"

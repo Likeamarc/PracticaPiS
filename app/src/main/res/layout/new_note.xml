@@ -10,8 +10,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="40dp"
-        android:paddingBottom="10dp"
+        android:layout_marginBottom="40.00dp"
+        android:paddingBottom="10.00dp"
         android:clipToPadding="false">
 
        <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,10 +61,10 @@
                android:inputType="text"
                android:textColor="@color/black"
                android:textColorHint="@color/gray"
-               android:textSize="20dp"
+               android:textSize="20sp"
                app:layout_constraintTop_toBottomOf="@id/imageBack"
                />
-           
+
            <TextView
                android:id="@+id/textDataTime"
                android:layout_width="0dp"
@@ -79,7 +79,7 @@
            <EditText
                android:id="@+id/inputNote"
                android:layout_width="match_parent"
-               android:layout_height="35dp"
+               android:layout_height="wrap_content"
                android:layout_marginLeft="12dp"
                android:layout_marginRight="12dp"
                android:layout_marginTop="15dp"
@@ -93,7 +93,7 @@
                android:inputType="textMultiLine"
                android:textColor="@color/black"
                android:textColorHint="@color/gray"
-               android:textSize="16dp"
+               android:textSize="16sp"
                app:layout_constraintTop_toBottomOf="@id/textDataTime"
                app:layout_constraintBottom_toBottomOf="parent"
                />
@@ -103,6 +103,8 @@
 
     </ScrollView>
 
+
+    <include layout="@layout/layout_miscellanious" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

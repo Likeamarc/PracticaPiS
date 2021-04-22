@@ -1,6 +1,8 @@
 package com.example.practicapis.entities;
 
 
+import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -19,6 +21,9 @@ public class Note implements Serializable {
 
     @ColumnInfo(name = "date_time")
     private String dateTime;
+
+    @ColumnInfo(name = "color")
+    private String color;
 
     @ColumnInfo(name = "note_text")
     private String noteText;
@@ -44,6 +49,10 @@ public class Note implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getColor() { return color;}
+
+    public void setColor(String color) {this.color = color;}
 
     public String getDateTime() {
         return dateTime;

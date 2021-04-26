@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.practicapis.R;
 
@@ -22,10 +21,10 @@ public class activity_register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        ImageView imageBack = findViewById(R.id.imageBackReg);
+        ImageView imageBack = findViewById(R.id.registerBackButton);
         imageBack.setOnClickListener(v -> onBackPressed());
 
-        Button buttonSignUp = findViewById(R.id.SignUpButton);
+        Button buttonSignUp = findViewById(R.id.signUpButton);
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -18,4 +18,9 @@
     <string name="facebook_app_id">234423575148047</string>
     <string name="fb_login_protocol_scheme">fb234423575148047</string>
 
+    <!--<string name="twitter_api_key">REPLACE_KEY</string>
+    <string name="twitter_api_secret">REPLACE_SECRET</string>-->
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">4gD4VYBLN2eKX8otghHXJmRLP</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">Qk9VY3mHMiP4XRtLtUk3F0A7rmQxEcl6nISnOzLoTaGF6IlRpO</string>
+
 </resources>

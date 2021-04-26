@@ -15,7 +15,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:id="@+id/NoteText"
+        android:id="@+id/noteText"
         android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:layout_toRightOf="@id/NoteText"
+        android:layout_toRightOf="@id/noteText"
         android:layout_marginRight="80dp"
         android:text="olvides"
         android:textColor="@color/black"
@@ -44,13 +44,13 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="30dp"
         android:textSize="25dp"
-        android:layout_below="@id/NoteText"
+        android:layout_below="@id/noteText"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:text="@string/SignIn" />
 
     <TextView
-        android:id="@+id/userTextSign"
+        android:id="@+id/userText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/SignInText"
@@ -60,31 +60,31 @@
         android:text="Username / Email" />
 
     <EditText
-        android:id="@+id/userSign"
+        android:id="@+id/user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="example@email.com / UsernameEx"
-        android:layout_below="@id/userTextSign" />
+        android:layout_below="@id/userText" />
 
     <TextView
-        android:id="@+id/passwordTextSign"
+        android:id="@+id/passwordText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userSign"
+        android:layout_below="@id/user"
         android:layout_marginLeft="50dp"
         android:textColor="@color/textbody"
         android:text="Password" />
 
     <EditText
-        android:id="@+id/passwordSign"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="**********"
-        android:layout_below="@id/passwordTextSign" />
+        android:layout_below="@id/passwordText" />
 
     <Button
         android:id="@+id/signInButton"
@@ -94,7 +94,7 @@
         android:textColor="@color/white"
         android:text = "@string/SignIn"
         android:textStyle="bold"
-        android:layout_below="@id/passwordSign"
+        android:layout_below="@id/password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
@@ -112,7 +112,7 @@
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebookButton"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_below="@id/socialsTextSign"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
@@ -132,7 +132,16 @@
         android:textColor="@color/white"
         android:textStyle="bold" />-->
 
-    <Button
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/twitterButton"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/facebookButton"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp" />
+
+    <!--Button
         android:id="@+id/twitterButton"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -142,7 +151,7 @@
         android:background="@color/twitterBlue"
         android:text="@string/Twitter"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold" />-->
 
     <Button
         android:id="@+id/registerButton"

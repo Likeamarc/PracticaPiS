@@ -15,7 +15,7 @@ import com.example.practicapis.R;
 
 public class activity_register extends AppCompatActivity {
 
-    public static final int REQUEST_USER_PASWORD = 1;
+    public static final int REQUEST_USER_PASSWORD = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +31,9 @@ public class activity_register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(activity_register.this, HomePage.class),
-                        REQUEST_USER_PASWORD);
+                        REQUEST_USER_PASSWORD);
             }
         });
-
-
     }
 
     @Override
@@ -52,7 +50,6 @@ public class activity_register extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
-
 }
 
 

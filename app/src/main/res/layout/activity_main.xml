@@ -14,8 +14,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-
     <TextView
         android:id="@+id/NoteText"
         android:layout_marginTop="100dp"
@@ -25,8 +23,7 @@
         android:layout_marginLeft="80dp"
         android:text="NOTE"
         android:textColor="@color/textbody"
-        android:textSize="40sp"
-        />
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/olvidesText"
@@ -38,11 +35,10 @@
         android:layout_marginRight="80dp"
         android:text="olvides"
         android:textColor="@color/black"
-        android:textSize="40sp"
-        />
+        android:textSize="40sp" />
 
     <TextView
-        android:id="@+id/SignIn"
+        android:id="@+id/SignInText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -51,19 +47,17 @@
         android:layout_below="@id/NoteText"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:text="@string/SignIn"
+        android:text="@string/SignIn" />
 
-        />
     <TextView
-        android:id="@+id/usernameTextSign"
+        android:id="@+id/userTextSign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/SignIn"
+        android:layout_below="@id/SignInText"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="15dp"
         android:textColor="@color/textbody"
-        android:text="Username / Email"
-        />
+        android:text="Username / Email" />
 
     <EditText
         android:id="@+id/userSign"
@@ -72,8 +66,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="example@email.com / UsernameEx"
-        android:layout_below="@id/usernameTextSign"
-        />
+        android:layout_below="@id/userTextSign" />
 
     <TextView
         android:id="@+id/passwordTextSign"
@@ -82,8 +75,7 @@
         android:layout_below="@id/userSign"
         android:layout_marginLeft="50dp"
         android:textColor="@color/textbody"
-        android:text="Password"
-        />
+        android:text="Password" />
 
     <EditText
         android:id="@+id/passwordSign"
@@ -92,10 +84,10 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="**********"
-        android:layout_below="@id/passwordTextSign"
-        />
+        android:layout_below="@id/passwordTextSign" />
+
     <Button
-        android:id="@+id/SignInButton"
+        android:id="@+id/signInButton"
         android:layout_width="161dp"
         android:layout_height="wrap_content"
         android:background="@color/textbody"
@@ -104,25 +96,47 @@
         android:textStyle="bold"
         android:layout_below="@id/passwordSign"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        />
+        android:layout_marginTop="10dp" />
+
     <TextView
-        android:id="@+id/socialsS"
+        android:id="@+id/socialsTextSign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Socials"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/SignInButton"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_below="@id/signInButton"
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/TwitterButtonS"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebookButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/socialsTextSign"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp" />
+
+    <!--<Button
+        android:id="@+id/facebookButton"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/socialsS"
+        android:layout_below="@id/socialsTextSign"
+        android:layout_toRightOf="@id/twitterButton"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/facebookBlue"
+        android:text="@string/Facebook"
+        android:textColor="@color/white"
+        android:textStyle="bold" />-->
+
+    <Button
+        android:id="@+id/twitterButton"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/facebookButton"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
         android:background="@color/twitterBlue"
@@ -131,35 +145,21 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/facebookButtonS"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/socialsS"
-        android:layout_toRightOf="@id/TwitterButtonS"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="20dp"
-        android:background="@color/facebookBlue"
-        android:text="@string/Facebook"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/buttonRegister"
+        android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/facebookButtonS"
+        android:layout_below="@id/twitterButton"
         android:background="@color/white"
         android:textColor="@color/textbody"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="270dp"
-        android:text="@string/SignIn" />
+        android:text="Register" />
 
     <Button
-        android:id="@+id/buttonForgotPass"
+        android:id="@+id/forgotPassButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/facebookButtonS"
+        android:layout_below="@id/twitterButton"
         android:background="@color/white"
         android:textColor="@color/gray"
         android:layout_marginTop="30dp"

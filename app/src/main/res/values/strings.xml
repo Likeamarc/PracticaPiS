@@ -14,4 +14,8 @@
     <string name="Twitter">Twitter</string>
     <string name="Facebook">Facebook</string>
     <string name="SignIn">SIGN IN</string>
+
+    <string name="facebook_app_id">234423575148047</string>
+    <string name="fb_login_protocol_scheme">fb234423575148047</string>
+
 </resources>

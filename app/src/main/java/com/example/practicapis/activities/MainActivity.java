@@ -1,12 +1,10 @@
 package com.example.practicapis.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
@@ -27,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        buttonRegister = findViewById(R.id.buttonRegister);
-        buttonSingIn = findViewById(R.id.SignInButton);
+        buttonRegister = findViewById(R.id.registerButton);
+        buttonSingIn = findViewById(R.id.signInButton);
 
         buttonSingIn.setOnClickListener(new View.OnClickListener() {
             @Override

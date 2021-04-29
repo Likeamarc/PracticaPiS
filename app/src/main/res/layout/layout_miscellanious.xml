@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_miscelanious"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,7 +17,7 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="Personalització del fons"
+        android:text="Més Opcions"
         android:textColor="@color/white"
         android:textSize="13sp"/>
 
@@ -131,7 +132,7 @@
        android:id="@+id/layoutAddImage"
        android:layout_width="wrap_content"
        android:layout_height="35dp"
-       android:layout_margin="30dp"
+       android:layout_margin="10dp"
        android:layout_gravity="center_vertical"
        android:orientation="horizontal">
 
@@ -148,9 +149,38 @@
            android:layout_marginLeft="10dp"
            android:layout_marginTop="8dp"
            android:includeFontPadding="false"
-           android:text="Add Image"
+           android:text="Afegir Imatge"
            android:textColor="@color/white"
            android:textSize="12sp"/>
+
+   </LinearLayout>
+
+   <LinearLayout
+       android:id="@+id/layoutDeleteNote"
+       android:layout_width="match_parent"
+       android:layout_height="35dp"
+       android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
+       android:layout_marginBottom="10dp"
+       android:gravity="center_vertical"
+       android:orientation="horizontal"
+       android:visibility="gone"
+       tools:ignore="UseCompoundDrawables">
+
+       <ImageView
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:contentDescription="@string/app_name"
+           android:src="@drawable/ic_delete"
+           app:tint="@color/gray" />
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="10dp"
+           android:includeFontPadding="false"
+           android:text="Eliminar Nota"
+           android:textColor="@color/white"/>
 
    </LinearLayout>
 

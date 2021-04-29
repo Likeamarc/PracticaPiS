@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutDeleteNoteContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:background="@color/black">
+
+    <ImageView
+        android:id="@+id/imageDeleteNote"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_delete"
+        app:tint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:includeFontPadding="false"
+        android:text="Eliminar Nota"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/imageDeleteNote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageDeleteNote"
+        app:layout_constraintTop_toTopOf="@id/imageDeleteNote"/>
+
+    <TextView
+        android:id="@+id/textDeleteNoteMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="Segur que vols eliminar la nota?"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@id/imageDeleteNote"/>
+
+    <TextView
+        android:id="@+id/deleteNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:includeFontPadding="false"
+        android:padding="8dp"
+        android:text="ELIMINAR NOTA"
+        android:textColor="@color/textbody"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textDeleteNoteMessage"/>
+
+    <TextView
+        android:id="@+id/cancelDeleteNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:includeFontPadding="false"
+        android:padding="8dp"
+        android:text="CANCELAR"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/deleteNote"
+        app:layout_constraintTop_toBottomOf="@id/textDeleteNoteMessage"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

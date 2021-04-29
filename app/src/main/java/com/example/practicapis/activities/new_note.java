@@ -30,6 +30,8 @@ public class new_note extends AppCompatActivity {
 
     private String selectedNoteColor;
 
+    private Note alreadyExistingNote;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +54,24 @@ public class new_note extends AppCompatActivity {
 
         selectedNoteColor = "#696969"; //color per defecte.
 
+        if(getIntent().getBooleanExtra("isViewOrUpdate", false)){
+            alreadyExistingNote = (Note) getIntent().getSerializableExtra("note");
+            setViewOrUpdateNote();
+        }
+
 
         initMiscellanious();
 
+    }
+
+    private void setViewOrUpdateNote(){
+        inputTitle.setText(alreadyExistingNote.getTitle());
+        inputText.setText(alreadyExistingNote.getNoteText());
+        dateTime.setText(alreadyExistingNote.getDateTime());
+
+        //if(alreadyExistingNote.getImagePath() != null && !alreadyExistingNote.getImagePath().trim().isEmpty()){
+
+        //}
     }
 
     private void saveNote(){
@@ -72,6 +89,10 @@ public class new_note extends AppCompatActivity {
         note.setDateTime(dateTime.getText().toString());
         note.setColor(selectedNoteColor);
 
+
+        if(alreadyExistingNote != null){
+            note.setId(alreadyExistingNote.getId());
+        }
 
         @SuppressLint("StaticFieldLeak")
         class saveNoteTask extends AsyncTask<Void, Void, Void>{
@@ -156,5 +177,19 @@ public class new_note extends AppCompatActivity {
                 imageColor4.setImageResource(R.drawable.ic_done);
             }
         });
+
+        if(alreadyExistingNote != null && alreadyExistingNote.getColor() != null && alreadyExistingNote.getColor().trim().isEmpty()){
+            switch(alreadyExistingNote.getColor()){
+                case "#ff4c4c":
+                    layoutMiscellanious.findViewById(R.id.viewColor2).performClick();
+                    break;
+                case "#1DA1F2":
+                    layoutMiscellanious.findViewById(R.id.viewColor3).performClick();
+                    break;
+                case "#FFFF33":
+                    layoutMiscellanious.findViewById(R.id.viewColor4).performClick();
+                    break;
+            }
+        }
     }
 }

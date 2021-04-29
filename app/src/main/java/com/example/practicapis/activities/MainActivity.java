@@ -13,19 +13,21 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.practicapis.R;
+/*
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+*/
 
 public class MainActivity extends AppCompatActivity {
 
-    TwitterLoginButton twitterButton;
+    Button twitterButton;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Button buttonRegister, buttonSingIn;
         super.onCreate(savedInstanceState);
 
-        Twitter.initialize(this);
+        /*Twitter.initialize(this);*/
 
         setContentView(R.layout.activity_main);
 

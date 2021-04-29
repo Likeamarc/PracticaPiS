@@ -11,6 +11,7 @@ import com.example.practicapis.R;
 import com.example.practicapis.adapters.NotesAdapter;
 import com.example.practicapis.database.NoteDatabase;
 import com.example.practicapis.entities.Note;
+import com.example.practicapis.listeners.NoteListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.Nullable;
@@ -23,11 +24,15 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements NoteListener {
     private RecyclerView mRecyclerView;
     private List<Note> notesList;
     private NotesAdapter notesAdapter;
     private static final int REQUEST_CODE_ADD_NOTE = 1;
+    private static final int REQUEST_CODE_UPDATE_NOTE = 2;
+    public static final int REQUEST_CODE_SHOW_NOTES = 3;
+
+    private int noteClickedPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +52,29 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-        getNotes();
-
-
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(
                 new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         );
 
         notesList = new ArrayList<>();
-        notesAdapter = new NotesAdapter(notesList);
+        notesAdapter = new NotesAdapter(notesList, this);
         mRecyclerView.setAdapter(notesAdapter);
 
-
+        getNotes(REQUEST_CODE_SHOW_NOTES);
 
     }
 
-    private void getNotes(){
+    @Override
+    public void onNoteClicked(Note note, int position) {
+        noteClickedPosition = position;
+        Intent intent = new Intent(getApplicationContext(), new_note.class);
+        intent.putExtra("isViewOrUpdate", true);
+        intent.putExtra("note", note);
+        startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
+    }
+
+    private void getNotes(final int requestCode){
 
         class getNotesText extends AsyncTask<Void, Void, List<Note>>{
             @Override
@@ -74,14 +85,18 @@ public class HomePage extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<Note> notes) {
                 super.onPostExecute(notes);
-                if(notesList.size() == 0){
+                if(requestCode == REQUEST_CODE_SHOW_NOTES){
                     notesList.addAll(notes);
                     notesAdapter.notifyDataSetChanged();
-                }else{
+                } else if(requestCode == REQUEST_CODE_ADD_NOTE){
                     notesList.add(0, notes.get(0));
                     notesAdapter.notifyItemInserted(0);
+                    mRecyclerView.smoothScrollToPosition(0);
+                } else if(requestCode == REQUEST_CODE_UPDATE_NOTE){
+                    notesList.remove(noteClickedPosition);
+                    notesList.add(noteClickedPosition, notes.get(noteClickedPosition));
+                    notesAdapter.notifyItemChanged(noteClickedPosition);
                 }
-                mRecyclerView.smoothScrollToPosition(0);
             }
         }
         new getNotesText().execute();
@@ -91,7 +106,11 @@ public class HomePage extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
-            getNotes();
+            getNotes(REQUEST_CODE_ADD_NOTE);
+        }else if(requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
+            if(data != null){
+                getNotes(REQUEST_CODE_UPDATE_NOTE);
+            }
         }
     }
 }

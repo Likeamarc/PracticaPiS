@@ -12,15 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.practicapis.R;
 import com.example.practicapis.entities.Note;
+import com.example.practicapis.listeners.NoteListener;
 
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
     private List<Note> notes;
+    private NoteListener noteListener;
 
-    public NotesAdapter(List<Note> notes){
+    public NotesAdapter(List<Note> notes, NoteListener noteListener){
         this.notes = notes;
+        this.noteListener = noteListener;
     }
 
     @NonNull
@@ -38,6 +41,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         holder.setNote(notes.get(position));
+        holder.layoutNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                noteListener.onNoteClicked(notes.get(position), position);
+            }
+        });
     }
 
     @Override

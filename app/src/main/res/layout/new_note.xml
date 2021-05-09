@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/editNote"
+    android:background="@color/white"
     tools:context=".activities.new_note">
 
     <ScrollView
@@ -76,6 +76,18 @@
                app:layout_constraintStart_toStartOf="@id/inputNoteTitle"
                app:layout_constraintTop_toBottomOf="@id/inputNoteTitle"/>
 
+           <ImageView
+               android:id="@+id/imageNote"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="15dp"
+               android:layout_marginLeft="12dp"
+               android:layout_marginRight="12dp"
+               android:adjustViewBounds="true"
+               android:contentDescription="@string/app_name"
+               android:visibility="gone"
+               app:layout_constraintTop_toBottomOf="@id/textDataTime"/>
+
            <EditText
                android:id="@+id/inputNote"
                android:layout_width="match_parent"
@@ -94,7 +106,7 @@
                android:textColor="@color/black"
                android:textColorHint="@color/gray"
                android:textSize="16sp"
-               app:layout_constraintTop_toBottomOf="@id/textDataTime"
+               app:layout_constraintTop_toBottomOf="@id/imageNote"
                app:layout_constraintBottom_toBottomOf="parent"
                />
 

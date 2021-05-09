@@ -1,10 +1,12 @@
 package com.example.practicapis.adapters;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,12 +59,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     static class NoteViewHolder extends RecyclerView.ViewHolder{
         TextView textTitle, textDate;
         LinearLayout layoutNote;
+        ImageView imageNote;
 
         NoteViewHolder(@NonNull View itemView){
             super(itemView);
             textTitle = itemView.findViewById(R.id.textTitle);
             textDate = itemView.findViewById(R.id.textDateTime);
             layoutNote = itemView.findViewById(R.id.layoutNote);
+            imageNote = itemView.findViewById(R.id.imageNoteView);
         }
 
         void setNote(Note note){
@@ -74,6 +78,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 gradientDrawable.setColor(Color.parseColor(note.getColor()));
             }else{
                 gradientDrawable.setColor(Color.parseColor("#696969"));
+            }
+            if(note.getImagePath() != null){
+                imageNote.setImageBitmap(BitmapFactory.decodeFile(note.getImagePath()));
+                imageNote.setVisibility(View.VISIBLE);
+            }else{
+                imageNote.setVisibility(View.GONE);
             }
         }
     }

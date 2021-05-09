@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
-    android:background="@color/white"
+    android:background="#EEEEEE"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.HomePage">
@@ -76,7 +76,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="411dp"
         android:layout_height="595dp"
-        android:background="@android:color/white"
+        android:background="#EEEEEE"
         android:padding="4dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"

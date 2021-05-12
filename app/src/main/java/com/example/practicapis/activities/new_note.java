@@ -12,6 +12,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Layout;
+import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -36,6 +39,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 
 public class new_note extends AppCompatActivity {
@@ -43,6 +47,8 @@ public class new_note extends AppCompatActivity {
     private EditText inputTitle, inputText;
     private TextView dateTime;
     private ImageView imageNote;
+    private TextView textWebURL;
+    private LinearLayout layoutWebURL;
 
     private String selectedNoteColor;
     private String selectedImagePath;
@@ -50,6 +56,7 @@ public class new_note extends AppCompatActivity {
     private Note alreadyExistingNote;
 
     private AlertDialog dialogDeleteNote;
+    private AlertDialog dialogAddURL;
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
@@ -66,6 +73,8 @@ public class new_note extends AppCompatActivity {
         inputText = findViewById(R.id.inputNote);
         dateTime = findViewById(R.id.textDataTime);
         imageNote = findViewById(R.id.imageNote);
+        textWebURL = findViewById(R.id.textWebURL);
+        layoutWebURL = findViewById(R.id.layoutWebURL);
 
         dateTime.setText(
                 new SimpleDateFormat("EEE dd MMMM yyy HH:mm a", Locale.getDefault())
@@ -92,9 +101,10 @@ public class new_note extends AppCompatActivity {
         inputTitle.setText(alreadyExistingNote.getTitle());
         inputText.setText(alreadyExistingNote.getNoteText());
         dateTime.setText(alreadyExistingNote.getDateTime());
+        //textWebURL.setText(alreadyExistingNote.getWebLink());
 
         //if(alreadyExistingNote.getImagePath() != null && !alreadyExistingNote.getImagePath().trim().isEmpty()){
-
+        //    selectedImagePath = alreadyExistingNote.getImagePath();
         //}
     }
 
@@ -113,6 +123,10 @@ public class new_note extends AppCompatActivity {
         note.setDateTime(dateTime.getText().toString());
         note.setColor(selectedNoteColor);
         note.setImagePath(selectedImagePath);
+
+        if(layoutWebURL.getVisibility() == View.VISIBLE){
+            note.setWebLink(textWebURL.getText().toString());
+        }
 
 
         if(alreadyExistingNote != null){
@@ -218,6 +232,14 @@ public class new_note extends AppCompatActivity {
                 }else{
                     selectImage();
                 }
+            }
+        });
+
+        layoutMiscellanious.findViewById(R.id.layoutAddUrl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                showDialogAddURL();
             }
         });
 
@@ -344,5 +366,46 @@ public class new_note extends AppCompatActivity {
         }
 
         dialogDeleteNote.show();
+    }
+
+    private void showDialogAddURL(){
+        if(dialogAddURL == null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(new_note.this);
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_add_url,
+                    (ViewGroup) findViewById(R.id.layoutAddUrlContainer)
+            );
+            builder.setView(view);
+            dialogAddURL= builder.create();
+            if (dialogAddURL.getWindow() != null){
+                dialogAddURL.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            final EditText inputURL = view.findViewById(R.id.inputURL);
+            inputURL.requestFocus();
+
+            view.findViewById(R.id.textAdd).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(inputURL.getText().toString().trim().isEmpty()){
+                        Toast.makeText(new_note.this, "Enter URL", Toast.LENGTH_LONG).show();
+                    }else if(!Patterns.WEB_URL.matcher(inputURL.getText().toString()).matches()){
+                        Toast.makeText(new_note.this, "Enter a valid ULR", Toast.LENGTH_LONG).show();
+                    }else{
+                        textWebURL.setText(inputText.getText().toString());
+                        layoutWebURL.setVisibility(View.VISIBLE);
+                        dialogAddURL.dismiss();
+                    }
+                }
+            });
+
+            view.findViewById(R.id.textCancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogAddURL.dismiss();
+                }
+             });
+        }
+        dialogAddURL.show();
     }
 }

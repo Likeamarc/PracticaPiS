@@ -88,6 +88,29 @@
                android:visibility="gone"
                app:layout_constraintTop_toBottomOf="@id/textDataTime"/>
 
+           <LinearLayout
+               android:id="@+id/layoutWebURL"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="12dp"
+               android:layout_marginRight="12dp"
+               android:layout_marginTop="15dp"
+               android:gravity="center_vertical"
+               android:visibility="gone"
+               android:orientation="horizontal"
+               app:layout_constraintTop_toBottomOf="@id/imageNote">
+
+               <TextView
+                   android:id="@+id/textWebURL"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:autoLink="web"
+                   android:includeFontPadding="false"
+                   android:textSize="13sp"/>
+
+           </LinearLayout>
+
            <EditText
                android:id="@+id/inputNote"
                android:layout_width="match_parent"
@@ -106,7 +129,7 @@
                android:textColor="@color/black"
                android:textColorHint="@color/gray"
                android:textSize="16sp"
-               app:layout_constraintTop_toBottomOf="@id/imageNote"
+               app:layout_constraintTop_toBottomOf="@id/layoutWebURL"
                app:layout_constraintBottom_toBottomOf="parent"
                />
 

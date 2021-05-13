@@ -106,6 +106,7 @@
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
                    android:autoLink="web"
+                   android:textColor="@color/textbody"
                    android:includeFontPadding="false"
                    android:textSize="13sp"/>
 

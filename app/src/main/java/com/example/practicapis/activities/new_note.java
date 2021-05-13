@@ -101,11 +101,13 @@ public class new_note extends AppCompatActivity {
         inputTitle.setText(alreadyExistingNote.getTitle());
         inputText.setText(alreadyExistingNote.getNoteText());
         dateTime.setText(alreadyExistingNote.getDateTime());
-        //textWebURL.setText(alreadyExistingNote.getWebLink());
+        textWebURL.setText(alreadyExistingNote.getWebLink());
 
-        //if(alreadyExistingNote.getImagePath() != null && !alreadyExistingNote.getImagePath().trim().isEmpty()){
-        //    selectedImagePath = alreadyExistingNote.getImagePath();
-        //}
+        if(!alreadyExistingNote.getImagePath().trim().equals("") && !alreadyExistingNote.getImagePath().trim().isEmpty()){
+            imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyExistingNote.getImagePath()));
+            selectedImagePath = alreadyExistingNote.getImagePath();
+            imageNote.setVisibility(View.VISIBLE);
+        }
     }
 
     private void saveNote(){
@@ -280,9 +282,11 @@ public class new_note extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0){
-            selectImage();
-        }else{
-            Toast.makeText(this, "Permision Denied!", Toast.LENGTH_SHORT).show();
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                selectImage();
+            }else{
+                Toast.makeText(this, "Permision Denied!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -294,7 +298,6 @@ public class new_note extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
                 if(selectedImageUri != null){
                     try{
-
                         InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         imageNote.setImageBitmap(bitmap);
@@ -318,7 +321,7 @@ public class new_note extends AppCompatActivity {
             filePath = contentUri.getPath();
         }else{
             cursor.moveToFirst();
-            int index = cursor.getColumnIndex("data");
+            int index = cursor.getColumnIndex("_data");
             filePath = cursor.getString(index);
             cursor.close();
         }
@@ -376,10 +379,12 @@ public class new_note extends AppCompatActivity {
                     (ViewGroup) findViewById(R.id.layoutAddUrlContainer)
             );
             builder.setView(view);
+
             dialogAddURL= builder.create();
             if (dialogAddURL.getWindow() != null){
                 dialogAddURL.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             }
+
 
             final EditText inputURL = view.findViewById(R.id.inputURL);
             inputURL.requestFocus();

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="10dp"
-    android:background="@color/black">
+    android:background="@drawable/background_dialog">
 
     <ImageView
         android:id="@+id/imageAddUrl"
@@ -50,7 +50,7 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:textColor="@color/white"
-        android:textColorHint="@drawable/background_dialog"
+        android:textColorHint="@color/editNote"
         app:layout_constraintTop_toBottomOf="@id/imageAddUrl"/>
 
     <TextView

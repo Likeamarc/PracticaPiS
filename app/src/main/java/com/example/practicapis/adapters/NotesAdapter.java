@@ -56,17 +56,20 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         return notes.size();
     }
 
+    @Override
+    public int getItemViewType(int position) { return position; }
+
     static class NoteViewHolder extends RecyclerView.ViewHolder{
         TextView textTitle, textDate;
         LinearLayout layoutNote;
-        ImageView imageNote;
+        ImageView imageNoteView;
 
         NoteViewHolder(@NonNull View itemView){
             super(itemView);
             textTitle = itemView.findViewById(R.id.textTitle);
             textDate = itemView.findViewById(R.id.textDateTime);
             layoutNote = itemView.findViewById(R.id.layoutNote);
-            imageNote = itemView.findViewById(R.id.imageNoteView);
+            imageNoteView = itemView.findViewById(R.id.imageNoteView);
         }
 
         void setNote(Note note){
@@ -79,12 +82,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             }else{
                 gradientDrawable.setColor(Color.parseColor("#696969"));
             }
-            if(note.getImagePath() != null){
-                imageNote.setImageBitmap(BitmapFactory.decodeFile(note.getImagePath()));
-                imageNote.setVisibility(View.VISIBLE);
+
+
+
+            if(note.getImagePath().trim().equals("")){
+                imageNoteView.setVisibility(View.GONE);
             }else{
-                imageNote.setVisibility(View.GONE);
+                imageNoteView.setImageBitmap(BitmapFactory.decodeFile(note.getImagePath()));
+                imageNoteView.setVisibility(View.VISIBLE);
             }
+
+
         }
     }
 }

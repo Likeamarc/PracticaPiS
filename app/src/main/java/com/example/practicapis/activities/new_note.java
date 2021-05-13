@@ -87,6 +87,24 @@ public class new_note extends AppCompatActivity {
         selectedNoteColor = "#696969"; //color per defecte.
         selectedImagePath = "";
 
+        findViewById(R.id.imageRemoveURL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textWebURL.setText(null);
+                layoutWebURL.setVisibility(View.GONE);
+            }
+        });
+
+        findViewById(R.id.imageRemoveImage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageNote.setImageBitmap(null);
+                imageNote.setVisibility(View.GONE);
+                findViewById(R.id.imageRemoveImage).setVisibility(View.GONE);
+                selectedImagePath = "";
+            }
+        });
+
         if(getIntent().getBooleanExtra("isViewOrUpdate", false)){
             alreadyExistingNote = (Note) getIntent().getSerializableExtra("note");
             setViewOrUpdateNote();
@@ -107,6 +125,7 @@ public class new_note extends AppCompatActivity {
             imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyExistingNote.getImagePath()));
             selectedImagePath = alreadyExistingNote.getImagePath();
             imageNote.setVisibility(View.VISIBLE);
+            findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
         }
     }
 
@@ -302,6 +321,7 @@ public class new_note extends AppCompatActivity {
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         imageNote.setImageBitmap(bitmap);
                         imageNote.setVisibility(View.VISIBLE);
+                        findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
 
                         selectedImagePath = getPathFromUri(selectedImageUri);
 

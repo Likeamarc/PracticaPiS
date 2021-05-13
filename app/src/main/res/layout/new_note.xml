@@ -88,6 +88,21 @@
                android:visibility="gone"
                app:layout_constraintTop_toBottomOf="@id/textDataTime"/>
 
+           <ImageView
+               android:id="@+id/imageRemoveImage"
+               android:layout_width="25dp"
+               android:layout_height="25dp"
+               android:layout_marginLeft="10dp"
+               android:layout_marginTop="10dp"
+               android:contentDescription="@string/app_name"
+               android:src="@drawable/ic_delete"
+               app:tint="@color/white"
+               android:padding="4dp"
+               android:visibility="gone"
+               android:background="@drawable/background_delete"
+               app:layout_constraintEnd_toEndOf="@id/imageNote"
+               app:layout_constraintTop_toTopOf="@id/imageNote"/>
+
            <LinearLayout
                android:id="@+id/layoutWebURL"
                android:layout_width="match_parent"
@@ -109,6 +124,14 @@
                    android:textColor="@color/textbody"
                    android:includeFontPadding="false"
                    android:textSize="13sp"/>
+               
+               <ImageView
+                   android:id="@+id/imageRemoveURL"
+                   android:layout_width="20dp"
+                   android:layout_height="20dp"
+                   android:contentDescription="@string/app_name"
+                   android:src="@drawable/ic_delete"
+                   app:tint="@color/black"/>
 
            </LinearLayout>
 

@@ -3,6 +3,8 @@ package com.example.practicapis.adapters;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +18,26 @@ import com.example.practicapis.R;
 import com.example.practicapis.entities.Note;
 import com.example.practicapis.listeners.NoteListener;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static bolts.Task.delay;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
     private List<Note> notes;
+    private List<Note> favouriteNotes;
     private NoteListener noteListener;
+    Timer timer;
+    private List<Note> notesSource;
+
 
     public NotesAdapter(List<Note> notes, NoteListener noteListener){
         this.notes = notes;
         this.noteListener = noteListener;
+        notesSource = notes;
     }
 
     @NonNull
@@ -93,6 +105,39 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             }
 
 
+        }
+    }
+
+    public void searchNotes(final String searchKeyWord){
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (searchKeyWord.trim().isEmpty()){
+                    notes = notesSource;
+                }else{
+                    ArrayList<Note> temp = new ArrayList<>();
+                    for(Note note : notesSource){
+                        if( note.getTitle().toLowerCase().contains(searchKeyWord.toLowerCase())
+                        || note.getNoteText().toLowerCase().contains(searchKeyWord.toLowerCase())){
+                            temp.add(note);
+                        }
+                    }
+                    notes = temp;
+                }
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        }, 500);
+    }
+
+    public void cancelTimer(){
+        if(timer != null){
+            timer.cancel();
         }
     }
 }

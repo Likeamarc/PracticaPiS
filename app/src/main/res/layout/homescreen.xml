@@ -76,11 +76,15 @@
         android:id="@+id/recyclerView"
         android:layout_width="411dp"
         android:layout_height="595dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
         android:background="#EEEEEE"
         android:padding="4dp"
         android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/layoutSearch"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNoteButton"

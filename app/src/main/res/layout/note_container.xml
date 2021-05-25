@@ -11,6 +11,33 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/starNotFavouriteNewNote"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_favourite_false"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@id/textTitle"
+        app:layout_constraintTop_toTopOf="@id/textTitle"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/starFavouriteNewNote"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_favourite_ok"
+        android:padding="4dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/layoutNote"
+        app:layout_constraintTop_toTopOf="@id/layoutNote"
+        app:tint="@color/backgroundNote4" />
+
+    <ImageView
         android:id="@+id/imageNoteView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

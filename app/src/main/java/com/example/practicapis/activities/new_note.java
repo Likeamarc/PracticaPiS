@@ -1,4 +1,4 @@
-package com.example.practicapis.activities;
+ package com.example.practicapis.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Layout;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,14 +31,13 @@ import androidx.core.content.ContextCompat;
 
 import com.example.practicapis.R;
 import com.example.practicapis.database.NoteDatabase;
-import com.example.practicapis.entities.Note;
+import com.example.practicapis.Model.Note;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 
 public class new_note extends AppCompatActivity {
@@ -49,9 +47,13 @@ public class new_note extends AppCompatActivity {
     private ImageView imageNote;
     private TextView textWebURL;
     private LinearLayout layoutWebURL;
+    private ImageView favourite_false;
+    private ImageView favourite_true;
 
     private String selectedNoteColor;
     private String selectedImagePath;
+
+    private int favourite;
 
     private Note alreadyExistingNote;
 
@@ -65,6 +67,10 @@ public class new_note extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_note);
+        initView();
+    }
+
+    private void initView(){
 
         ImageView imageBack = findViewById(R.id.imageBack);
         imageBack.setOnClickListener(v -> onBackPressed());
@@ -75,6 +81,8 @@ public class new_note extends AppCompatActivity {
         imageNote = findViewById(R.id.imageNote);
         textWebURL = findViewById(R.id.textWebURL);
         layoutWebURL = findViewById(R.id.layoutWebURL);
+        favourite_false = findViewById(R.id.starNotFavouriteNewNote);
+        favourite_true = findViewById(R.id.starFavouriteNewNote);
 
         dateTime.setText(
                 new SimpleDateFormat("EEE dd MMMM yyy HH:mm a", Locale.getDefault())
@@ -86,12 +94,31 @@ public class new_note extends AppCompatActivity {
 
         selectedNoteColor = "#696969"; //color per defecte.
         selectedImagePath = "";
+        favourite = 0; //per defecte no es favorita.
 
         findViewById(R.id.imageRemoveURL).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textWebURL.setText(null);
                 layoutWebURL.setVisibility(View.GONE);
+            }
+        });
+
+        findViewById(R.id.starNotFavouriteNewNote).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favourite_false.setVisibility(View.GONE);
+                favourite_true.setVisibility(View.VISIBLE);
+                favourite = 0;
+            }
+        });
+
+        findViewById(R.id.starFavouriteNewNote).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favourite_true.setVisibility(View.GONE);
+                favourite_false.setVisibility(View.VISIBLE);
+                favourite = 1;
             }
         });
 
@@ -144,6 +171,7 @@ public class new_note extends AppCompatActivity {
         note.setDateTime(dateTime.getText().toString());
         note.setColor(selectedNoteColor);
         note.setImagePath(selectedImagePath);
+        note.setFavourite(favourite);
 
         if(layoutWebURL.getVisibility() == View.VISIBLE){
             note.setWebLink(textWebURL.getText().toString());

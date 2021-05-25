@@ -10,27 +10,30 @@ import android.os.Bundle;
 import com.example.practicapis.R;
 import com.example.practicapis.adapters.NotesAdapter;
 import com.example.practicapis.database.NoteDatabase;
-import com.example.practicapis.entities.Note;
+import com.example.practicapis.Model.Note;
 import com.example.practicapis.listeners.NoteListener;
+import com.example.practicapis.viewmodel.HomePageViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.renderscript.ScriptGroup;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 public class HomePage extends AppCompatActivity implements NoteListener {
     private RecyclerView mRecyclerView;
     private List<Note> notesList;
+    private List<Note> favouriteNotesList;
     private NotesAdapter notesAdapter;
+    private  HomePageViewModel homePageViewModel;
     private static final int REQUEST_CODE_ADD_NOTE = 1;
     private static final int REQUEST_CODE_UPDATE_NOTE = 2;
     public static final int REQUEST_CODE_SHOW_NOTES = 3;
@@ -39,10 +42,11 @@ public class HomePage extends AppCompatActivity implements NoteListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FloatingActionButton addNote;
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
+
+
+        FloatingActionButton addNote;
 
         addNote = findViewById(R.id.addNoteButton);
 
@@ -61,6 +65,7 @@ public class HomePage extends AppCompatActivity implements NoteListener {
         );
 
         notesList = new ArrayList<>();
+        favouriteNotesList = new ArrayList<>();
         notesAdapter = new NotesAdapter(notesList, this);
         mRecyclerView.setAdapter(notesAdapter);
 

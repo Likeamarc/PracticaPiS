@@ -89,6 +89,34 @@
                app:layout_constraintTop_toBottomOf="@id/textDataTime"/>
 
            <ImageView
+               android:id="@+id/starNotFavouriteNewNote"
+               android:layout_width="35dp"
+               android:layout_height="35dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginLeft="10dp"
+               android:contentDescription="@string/app_name"
+               android:src="@drawable/ic_favourite_false"
+               android:padding="4dp"
+               android:visibility="visible"
+               app:layout_constraintEnd_toEndOf="@id/inputNoteTitle"
+               app:layout_constraintTop_toTopOf="@id/inputNoteTitle"
+               app:tint="@color/black" />
+
+           <ImageView
+               android:id="@+id/starFavouriteNewNote"
+               android:layout_width="35dp"
+               android:layout_height="35dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginLeft="10dp"
+               android:contentDescription="@string/app_name"
+               android:src="@drawable/ic_favourite_ok"
+               android:padding="4dp"
+               android:visibility="gone"
+               app:layout_constraintEnd_toEndOf="@id/inputNoteTitle"
+               app:layout_constraintTop_toTopOf="@id/inputNoteTitle"
+               app:tint="@color/backgroundNote4" />
+
+           <ImageView
                android:id="@+id/imageRemoveImage"
                android:layout_width="25dp"
                android:layout_height="25dp"
@@ -121,7 +149,6 @@
                    android:layout_height="wrap_content"
                    android:layout_weight="1"
                    android:autoLink="web"
-                   android:textColor="@color/textbody"
                    android:includeFontPadding="false"
                    android:textSize="13sp"/>
                

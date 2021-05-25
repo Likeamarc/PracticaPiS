@@ -1,7 +1,5 @@
-package com.example.practicapis.entities;
+package com.example.practicapis.Model;
 
-
-import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -33,6 +31,9 @@ public class Note implements Serializable {
 
     @ColumnInfo(name = "web_link")
     private String webLink;
+
+    @ColumnInfo(name = "favourite")
+    private int favourite;
 
     public int getId() {
         return id;
@@ -85,6 +86,11 @@ public class Note implements Serializable {
     public void setWebLink(String webLink) {
         this.webLink = webLink;
     }
+
+    public int getFavourite(){ return favourite;}
+
+    public void setFavourite(int fav){ this.favourite = fav;}
+
 
     @NonNull
     @Override

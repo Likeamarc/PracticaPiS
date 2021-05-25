@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.practicapis.R;
-import com.example.practicapis.entities.Note;
+import com.example.practicapis.Model.Note;
 import com.example.practicapis.listeners.NoteListener;
 
 import java.util.ArrayList;
@@ -72,7 +72,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     public int getItemViewType(int position) { return position; }
 
     static class NoteViewHolder extends RecyclerView.ViewHolder{
-        TextView textTitle, textDate;
+        TextView textTitle, textDate, textWebURL;
+        ImageView noteFavourite, noteNotFavourite;
         LinearLayout layoutNote;
         ImageView imageNoteView;
 
@@ -95,6 +96,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 gradientDrawable.setColor(Color.parseColor("#696969"));
             }
 
+            if(note.getFavourite() == 1){
+                noteNotFavourite.setVisibility(View.GONE);
+                noteFavourite.setVisibility(View.VISIBLE);
+            }else{
+                noteNotFavourite.setVisibility(View.VISIBLE);
+                noteFavourite.setVisibility(View.GONE);
+            }
 
 
             if(note.getImagePath().trim().equals("")){

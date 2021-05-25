@@ -1,12 +1,11 @@
 package com.example.practicapis.viewmodel;
+/*
 
-import android.text.TextUtils;
-import android.util.Patterns;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.example.practicapis.BR;
-import com.example.practicapis.entities.Login;
+import androidx.databinding.library.baseAdapters.BR;
+import com.example.practicapis.Model.Login;
 
 
 public class LoginViewModel extends BaseObservable {
@@ -25,7 +24,7 @@ public class LoginViewModel extends BaseObservable {
 
     private void setToastMessage(String toastMessage){
         this.toastMessage = toastMessage;
-        notifyPropertyChanged(BR.toastMessage);
+        //notifyPropertyChanged(BR.toastMessage);
     }
 
     public String getUserName(){
@@ -43,7 +42,7 @@ public class LoginViewModel extends BaseObservable {
 
     private void setUserEmail(String email){
         login.setEmail(email);
-        notifyPropertyChanged(BR.userEmail);
+        //notifyPropertyChanged(BR.userEmail);
     }
 
     @Bindable
@@ -53,11 +52,11 @@ public class LoginViewModel extends BaseObservable {
 
     private void setUserPassword(String password){
         login.setPassword(password);
-        notifyPropertyChanged(BR.userPassword);
+        //notifyPropertyChanged(BR.userPassword);
     }
 
     public LoginViewModel(){
-        login = new Login("", "", "");
+        login = new Login();
     }
 
     public void onButtonClicked(){
@@ -73,6 +72,9 @@ public class LoginViewModel extends BaseObservable {
         return true;
         /*
         Aquí hay que hacer una funcion que constrante los datos con la Firebase y si la combinacion usuario / pass existe permitir el login, si no no.
-         */
+
+
     }
 }
+*/
+

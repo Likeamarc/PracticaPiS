@@ -1,6 +1,6 @@
-package com.example.practicapis.entities;
+package com.example.practicapis.Model;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Login implements Serializable {
 
     @PrimaryKey
-    String username;
+    @NonNull String username;
 
     @ColumnInfo(name = "email")
     String email;

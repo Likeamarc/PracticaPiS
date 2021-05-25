@@ -7,14 +7,14 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.practicapis.entities.Note;
+import com.example.practicapis.Model.Note;
 
 import java.util.List;
 
 @Dao
 public interface NoteDao {
 
-    @Query("SELECT * FROM notes ORDER BY id DESC" )
+    @Query("SELECT * FROM notes ORDER BY favourite DESC" )
     List<Note> getAllNotes();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -22,4 +22,5 @@ public interface NoteDao {
 
     @Delete
     void deleteNote (Note note);
+
 }

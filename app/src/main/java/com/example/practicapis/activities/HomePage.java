@@ -9,25 +9,31 @@ import android.os.Bundle;
 
 import com.example.practicapis.R;
 import com.example.practicapis.adapters.NotesAdapter;
+import com.example.practicapis.database.FavouriteDatabase;
 import com.example.practicapis.database.NoteDatabase;
-import com.example.practicapis.entities.Note;
+import com.example.practicapis.Model.Note;
 import com.example.practicapis.listeners.NoteListener;
+import com.example.practicapis.viewmodel.HomePageViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.util.Log;
+import android.renderscript.ScriptGroup;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 public class HomePage extends AppCompatActivity implements NoteListener {
-    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView, favsRecyclerView;
     private List<Note> notesList;
-    private NotesAdapter notesAdapter;
+    private List<Note> favouriteNotesList;
+    private NotesAdapter notesAdapter, favsAdapter;
     private static final int REQUEST_CODE_ADD_NOTE = 1;
     private static final int REQUEST_CODE_UPDATE_NOTE = 2;
     public static final int REQUEST_CODE_SHOW_NOTES = 3;
@@ -36,10 +42,11 @@ public class HomePage extends AppCompatActivity implements NoteListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FloatingActionButton addNote;
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
+
+
+        FloatingActionButton addNote;
 
         addNote = findViewById(R.id.addNoteButton);
 
@@ -52,16 +59,45 @@ public class HomePage extends AppCompatActivity implements NoteListener {
             }
         });
 
-        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerViewNormal);
         mRecyclerView.setLayoutManager(
                 new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         );
 
-        notesList = new ArrayList<>();
-        notesAdapter = new NotesAdapter(notesList, this);
-        mRecyclerView.setAdapter(notesAdapter);
+        favsRecyclerView = findViewById(R.id.recyclerViewFavs);
+        favsRecyclerView.setLayoutManager(
+                new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        );
 
+        notesList = new ArrayList<>();
+        favouriteNotesList = new ArrayList<>();
+        notesAdapter = new NotesAdapter(notesList, this);
+        favsAdapter = new NotesAdapter(favouriteNotesList, this);
+        mRecyclerView.setAdapter(notesAdapter);
+        favsRecyclerView.setAdapter(favsAdapter);
+
+        getFavourites(REQUEST_CODE_SHOW_NOTES, false);
         getNotes(REQUEST_CODE_SHOW_NOTES, false);
+
+        EditText inputSearch = findViewById(R.id.inputSearch);
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                notesAdapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(notesList.size() != 0){
+                    notesAdapter.searchNotes(s.toString());
+                }
+            }
+        });
 
     }
 
@@ -74,7 +110,45 @@ public class HomePage extends AppCompatActivity implements NoteListener {
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
     }
 
+    private void getFavourites(final int requestCode, final boolean isNoteDeleted){
+        class getFavouritesText extends AsyncTask<Void, Void, List<Note>>{
+            @Override
+            protected List<Note> doInBackground(Void... voids) {
+                return FavouriteDatabase.getDatabase(getApplicationContext()).favouriteDao().getAllFavourites();
+            }
+
+            @Override
+            protected void onPostExecute(List<Note> FavNotes) {
+                super.onPostExecute(FavNotes);
+                if(requestCode == REQUEST_CODE_SHOW_NOTES){
+                    favouriteNotesList.addAll(FavNotes);
+                    favsAdapter.notifyDataSetChanged();
+                } else if(requestCode == REQUEST_CODE_ADD_NOTE){
+                    favouriteNotesList.add(0, FavNotes.get(0));
+                    favsAdapter.notifyItemInserted(0);
+                    mRecyclerView.smoothScrollToPosition(0);
+                } else if(requestCode == REQUEST_CODE_UPDATE_NOTE){
+                    favouriteNotesList.remove(noteClickedPosition);
+                    if(isNoteDeleted){
+                        favsAdapter.notifyItemRemoved(noteClickedPosition);
+                    }else{
+                        if(FavNotes.get(noteClickedPosition).getFavourite() == 1){
+                            favouriteNotesList.add(noteClickedPosition, FavNotes.get(noteClickedPosition));
+                        }else{
+                            notesList.add(noteClickedPosition, FavNotes.get(noteClickedPosition));
+                            FavNotes.remove(noteClickedPosition);
+                        }
+
+                        favsAdapter.notifyItemChanged(noteClickedPosition);
+                    }
+                }
+            }
+        }
+        new getFavouritesText().execute();
+    }
+
     private void getNotes(final int requestCode, final boolean isNoteDeleted){
+
 
         class getNotesText extends AsyncTask<Void, Void, List<Note>>{
             @Override
@@ -98,7 +172,12 @@ public class HomePage extends AppCompatActivity implements NoteListener {
                     if(isNoteDeleted){
                         notesAdapter.notifyItemRemoved(noteClickedPosition);
                     }else{
-                        notesList.add(noteClickedPosition, notes.get(noteClickedPosition));
+                        if(notes.get(noteClickedPosition).getFavourite() == 1){
+                            favouriteNotesList.add(noteClickedPosition, notes.get(noteClickedPosition));
+                        }else{
+                            notesList.add(noteClickedPosition, notes.get(noteClickedPosition));
+                            notes.remove(noteClickedPosition);
+                        }
                         notesAdapter.notifyItemChanged(noteClickedPosition);
                     }
                 }
@@ -111,9 +190,11 @@ public class HomePage extends AppCompatActivity implements NoteListener {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
+            getFavourites(REQUEST_CODE_ADD_NOTE, false);
             getNotes(REQUEST_CODE_ADD_NOTE, false);
         }else if(requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
             if(data != null){
+                getFavourites(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra( "isNoteDeleted", false));
                 getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra( "isNoteDeleted", false));
             }
         }

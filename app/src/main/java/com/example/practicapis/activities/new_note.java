@@ -30,6 +30,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.practicapis.R;
+import com.example.practicapis.database.FavouriteDatabase;
 import com.example.practicapis.database.NoteDatabase;
 import com.example.practicapis.Model.Note;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -148,6 +149,10 @@ public class new_note extends AppCompatActivity {
         dateTime.setText(alreadyExistingNote.getDateTime());
         textWebURL.setText(alreadyExistingNote.getWebLink());
 
+        if(!textWebURL.getText().equals("")){
+            layoutWebURL.setVisibility(View.VISIBLE);
+        }
+
         if(!alreadyExistingNote.getImagePath().trim().equals("") && !alreadyExistingNote.getImagePath().trim().isEmpty()){
             imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyExistingNote.getImagePath()));
             selectedImagePath = alreadyExistingNote.getImagePath();
@@ -187,7 +192,11 @@ public class new_note extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(Void... voids){
-                NoteDatabase.getDatabase(getApplicationContext()).noteDao().insertNote(note);
+                if(favourite == 0) {
+                    NoteDatabase.getDatabase(getApplicationContext()).noteDao().insertNote(note);
+                }else{
+                    FavouriteDatabase.getDatabase(getApplicationContext()).favouriteDao().insertNote(note);
+                }
                 return null;
             }
 
@@ -396,8 +405,13 @@ public class new_note extends AppCompatActivity {
 
                         @Override
                         protected Void doInBackground(Void... voids) {
-                            NoteDatabase.getDatabase(getApplicationContext()).noteDao()
-                                    .deleteNote(alreadyExistingNote);
+                            if(favourite == 1){
+                                FavouriteDatabase.getDatabase(getApplicationContext()).favouriteDao()
+                                        .deleteNote(alreadyExistingNote);
+                            }else{
+                                NoteDatabase.getDatabase(getApplicationContext()).noteDao()
+                                        .deleteNote(alreadyExistingNote);
+                            }
                            return null;
                         }
 
@@ -445,7 +459,7 @@ public class new_note extends AppCompatActivity {
                     }else if(!Patterns.WEB_URL.matcher(inputURL.getText().toString()).matches()){
                         Toast.makeText(new_note.this, "Enter a valid ULR", Toast.LENGTH_LONG).show();
                     }else{
-                        textWebURL.setText(inputText.getText().toString());
+                        textWebURL.setText(inputURL.getText().toString());
                         layoutWebURL.setVisibility(View.VISIBLE);
                         dialogAddURL.dismiss();
                     }

@@ -1,80 +1,54 @@
 package com.example.practicapis.viewmodel;
-/*
 
+import android.app.Application;
+import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-import androidx.databinding.library.baseAdapters.BR;
-import com.example.practicapis.Model.Login;
+import com.example.practicapis.database.LoginDatabase;
+import com.example.practicapis.database.NoteDatabase;
+import com.example.practicapis.entities.Login;
+import com.example.practicapis.entities.Note;
+
+import java.util.List;
 
 
-public class LoginViewModel extends BaseObservable {
+public class LoginViewModel extends AndroidViewModel {
+    private LoginDatabase loginDatabase;
+    public LiveData<List<Login>> usersListLiveData;
 
-    private Login login;
-
-    private String successMessage ="Login successful";
-    private String errorMessage = "Email or Password is not valid";
-
-    @Bindable
-    private String toastMessage = null;
-
-    public String getToastMessage(){
-        return toastMessage;
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
+        loginDatabase = LoginDatabase.getInstance(application);
+        usersListLiveData = loginDatabase.loginDao().getAllUsers();
     }
 
-    private void setToastMessage(String toastMessage){
-        this.toastMessage = toastMessage;
-        //notifyPropertyChanged(BR.toastMessage);
+
+    public LiveData<List<Login>> getUsersListLiveData(){
+        return usersListLiveData;
     }
 
-    public String getUserName(){
-        return login.getUsername();
+    public void insertUser(Login login){
+        loginDatabase.loginDao().insertUser(login);
     }
 
-    private void setUserName(String username){
-        login.setUsername(username);
+    public void deleteUser(Login login){
+        loginDatabase.loginDao().deleteUser(login);
     }
 
-    @Bindable
-    public String getUserEmail(){
-        return login.getEmail();
+    public void updateUser(Login login){
+        loginDatabase.loginDao().updateUser(login);
     }
 
-    private void setUserEmail(String email){
-        login.setEmail(email);
-        //notifyPropertyChanged(BR.userEmail);
-    }
 
-    @Bindable
-    public String getUserPassword(){
-        return login.getPassword();
-    }
-
-    private void setUserPassword(String password){
-        login.setPassword(password);
-        //notifyPropertyChanged(BR.userPassword);
-    }
-
-    public LoginViewModel(){
-        login = new Login();
-    }
-
-    public void onButtonClicked(){
-        if (isValid()){
-            setToastMessage(successMessage);
-        }
-        else{
-            setToastMessage(errorMessage);
-        }
-    }
-
-    public boolean isValid(){
-        return true;
-        /*
-        Aquí hay que hacer una funcion que constrante los datos con la Firebase y si la combinacion usuario / pass existe permitir el login, si no no.
-
-
-    }
 }
-*/
-

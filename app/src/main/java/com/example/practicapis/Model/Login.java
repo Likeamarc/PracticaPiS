@@ -1,13 +1,14 @@
-package com.example.practicapis.Model;
+package com.example.practicapis.entities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "users")
+@Entity(tableName = "login")
 public class Login implements Serializable {
 
     @PrimaryKey
@@ -19,11 +20,19 @@ public class Login implements Serializable {
     @ColumnInfo(name = "password")
     String password;
 
-    @ColumnInfo(name = "name")
-    String name;
+    @ColumnInfo(name = "firstname")
+    String firstname;
 
     @ColumnInfo(name = "lastname")
     String lastname;
+
+    public Login(String username, String firstname, String lastname, String password, String email ){
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+    }
 
     public String getUsername() {
         return username;
@@ -49,12 +58,12 @@ public class Login implements Serializable {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String name) {
+        this.firstname = name;
     }
 
     public String getLastname() {

@@ -1,5 +1,6 @@
 package com.example.practicapis.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,22 +24,39 @@ public class activity_register extends AppCompatActivity {
 
     public LoginViewModel loginViewModel;
     public static final int REQUEST_USER_PASSWORD = 1;
-    Button registerButton;
+
 
 
     public void onCreate(Bundle savedInstanceState) {
+        Button registerButton;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         ImageView imageBack = findViewById(R.id.registerBackButton);
         registerButton = (Button) findViewById(R.id.signUpButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createUser(v);
+                System.out.println("Clicked button");
+                try{
+                    createUser(v);
+                }
+                catch(NullPointerException e){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity_register.this);
+                    builder.setTitle("ERROR");
+                    builder.setMessage("Uno de los campos esta vacio!");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    return;
+                }
+
 
             }
         });
+
 
 
     }
@@ -51,16 +69,6 @@ public class activity_register extends AppCompatActivity {
         String password = v.findViewById(R.id.registerPassword).toString();
         String repeatPassword = v.findViewById(R.id.repeatPassword).toString();
 
-        if(firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("ERROR");
-            builder.setMessage("Uno de los campos esta vacio!");
-            builder.setPositiveButton("Aceptar", null);
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            return;
-        }
         if(!password.equals(repeatPassword)){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("ERROR");

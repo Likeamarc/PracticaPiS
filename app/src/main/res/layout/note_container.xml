@@ -11,7 +11,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/starNotFavouriteNewNote"
+        android:id="@+id/starNotFavouriteNewNoteCont"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
@@ -24,7 +24,7 @@
         app:tint="@color/black" />
 
     <ImageView
-        android:id="@+id/starFavouriteNewNote"
+        android:id="@+id/starFavouriteNewNoteCont"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="10dp"

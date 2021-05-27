@@ -6,7 +6,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.practicapis.dao.LoginDao;
-import com.example.practicapis.Model.Login;
+import com.example.practicapis.entities.Login;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

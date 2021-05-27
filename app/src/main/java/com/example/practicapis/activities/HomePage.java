@@ -11,19 +11,15 @@ import com.example.practicapis.R;
 import com.example.practicapis.adapters.NotesAdapter;
 import com.example.practicapis.database.FavouriteDatabase;
 import com.example.practicapis.database.NoteDatabase;
-import com.example.practicapis.Model.Note;
+import com.example.practicapis.entities.Note;
 import com.example.practicapis.listeners.NoteListener;
-import com.example.practicapis.viewmodel.HomePageViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.renderscript.ScriptGroup;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -80,6 +76,7 @@ public class HomePage extends AppCompatActivity implements NoteListener {
         getNotes(REQUEST_CODE_SHOW_NOTES, false);
 
         EditText inputSearch = findViewById(R.id.inputSearch);
+        /*
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,6 +86,7 @@ public class HomePage extends AppCompatActivity implements NoteListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 notesAdapter.cancelTimer();
+                favsAdapter.cancelTimer();
             }
 
             @Override
@@ -96,9 +94,14 @@ public class HomePage extends AppCompatActivity implements NoteListener {
                 if(notesList.size() != 0){
                     notesAdapter.searchNotes(s.toString());
                 }
-            }
-        });
 
+                if(favouriteNotesList.size() != 0){
+                    favsAdapter.searchNotes(s.toString());
+                }
+            }
+         });
+
+         */
     }
 
     @Override

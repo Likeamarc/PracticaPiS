@@ -1,4 +1,4 @@
-package com.example.practicapis.Model;
+package com.example.practicapis.entities;
 
 
 import androidx.annotation.NonNull;

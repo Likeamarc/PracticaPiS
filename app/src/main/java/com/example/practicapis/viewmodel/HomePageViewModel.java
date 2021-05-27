@@ -1,12 +1,10 @@
 package com.example.practicapis.viewmodel;
 
 import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.practicapis.Model.Note;
+import com.example.practicapis.entities.Note;
 
 import java.util.List;
 

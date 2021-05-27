@@ -6,9 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.practicapis.Model.Note;
+import com.example.practicapis.entities.Note;
 import com.example.practicapis.dao.FavouriteDao;
-import com.example.practicapis.dao.NoteDao;
 
 @Database(entities = Note.class, version = 1, exportSchema = false)
 public abstract class FavouriteDatabase extends RoomDatabase {

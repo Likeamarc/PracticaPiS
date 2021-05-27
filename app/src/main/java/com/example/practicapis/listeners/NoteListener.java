@@ -1,6 +1,6 @@
 package com.example.practicapis.listeners;
 
-import com.example.practicapis.Model.Note;
+import com.example.practicapis.entities.Note;
 
 public interface NoteListener {
 

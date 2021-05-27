@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.practicapis.R;
-import com.example.practicapis.Model.Note;
+import com.example.practicapis.entities.Note;
 import com.example.practicapis.listeners.NoteListener;
 
 import java.util.ArrayList;
@@ -83,6 +83,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             textDate = itemView.findViewById(R.id.textDateTime);
             layoutNote = itemView.findViewById(R.id.layoutNote);
             imageNoteView = itemView.findViewById(R.id.imageNoteView);
+            noteFavourite = itemView.findViewById(R.id.starFavouriteNewNoteCont);
+            noteNotFavourite = itemView.findViewById(R.id.starNotFavouriteNewNoteCont);
         }
 
         void setNote(Note note){

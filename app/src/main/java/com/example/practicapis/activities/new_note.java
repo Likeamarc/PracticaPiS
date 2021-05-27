@@ -32,7 +32,7 @@ import androidx.core.content.ContextCompat;
 import com.example.practicapis.R;
 import com.example.practicapis.database.FavouriteDatabase;
 import com.example.practicapis.database.NoteDatabase;
-import com.example.practicapis.Model.Note;
+import com.example.practicapis.entities.Note;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.InputStream;

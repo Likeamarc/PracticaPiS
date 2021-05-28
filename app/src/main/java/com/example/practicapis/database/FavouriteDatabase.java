@@ -20,7 +20,7 @@ public abstract class FavouriteDatabase extends RoomDatabase {
                     context,
                     FavouriteDatabase.class,
                     "notes_db"
-            ).build();
+            ).fallbackToDestructiveMigration().build();
         }
         return notesDatabase;
     }

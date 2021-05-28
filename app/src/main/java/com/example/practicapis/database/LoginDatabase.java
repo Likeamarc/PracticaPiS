@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-@Database(entities = Login.class, version = 1, exportSchema = false)
+@Database(entities = Login.class, version = 2, exportSchema = false)
 public abstract class LoginDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "login_db";
@@ -20,7 +20,7 @@ public abstract class LoginDatabase extends RoomDatabase {
 
     public static synchronized LoginDatabase getInstance(Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(), LoginDatabase.class, DB_NAME).fallbackToDestructiveMigration().build();
+            instance = Room.databaseBuilder(context.getApplicationContext(), LoginDatabase.class, DB_NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
         }
         return instance;
     }

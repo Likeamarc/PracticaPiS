@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import com.example.practicapis.dao.NoteDao;
 import com.example.practicapis.entities.Note;
 
-@Database(entities = Note.class, version = 1, exportSchema = false)
+@Database(entities = Note.class, version = 2, exportSchema = false)
 public abstract class NoteDatabase extends RoomDatabase {
 
     private static NoteDatabase notesDatabase;
@@ -21,7 +21,7 @@ public abstract class NoteDatabase extends RoomDatabase {
                     context,
                     NoteDatabase.class,
                     "notes_db"
-            ).build();
+            ).fallbackToDestructiveMigration().build();
         }
         return notesDatabase;
     }

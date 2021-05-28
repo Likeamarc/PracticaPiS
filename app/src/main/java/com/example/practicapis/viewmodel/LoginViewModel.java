@@ -21,25 +21,56 @@ import com.example.practicapis.entities.Login;
 import com.example.practicapis.entities.Note;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 
 public class LoginViewModel extends AndroidViewModel {
+    private static LoginViewModel vmInstance;
     private LoginDatabase loginDatabase;
-    public LiveData<List<Login>> usersListLiveData;
+    public List<Login> usersListLiveData;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
         loginDatabase = LoginDatabase.getInstance(application);
-        usersListLiveData = loginDatabase.loginDao().getAllUsers();
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                usersListLiveData = loginDatabase.loginDao().getAllUsers();
+            }
+        });
+
+    }
+
+    @MainThread
+    public static LoginViewModel get(@NonNull Application application){
+        if(vmInstance == null){
+            vmInstance = new LoginViewModel(application);
+        }
+        return vmInstance;
     }
 
 
-    public LiveData<List<Login>> getUsersListLiveData(){
+    public List<Login> getUsersListLiveData(){
+        usersListLiveData = loginDatabase.loginDao().getAllUsers();
         return usersListLiveData;
+
+    }
+
+    public List<Login> getUsersWithEmail(String search){
+        return loginDatabase.loginDao().findUserWithEmail(search);
+    }
+
+    public List<Login> getUsersWithUsername(String search){
+        return loginDatabase.loginDao().findUserWithName(search);
     }
 
     public void insertUser(Login login){
-        loginDatabase.loginDao().insertUser(login);
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                loginDatabase.loginDao().insertUser(login);
+            }
+        });
     }
 
     public void deleteUser(Login login){

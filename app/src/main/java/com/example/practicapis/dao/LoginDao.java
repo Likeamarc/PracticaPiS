@@ -15,8 +15,14 @@ import java.util.List;
 @Dao
 public interface LoginDao {
 
-    @Query("SELECT * FROM login ORDER BY username DESC" )
-    LiveData<List<Login>> getAllUsers();
+    @Query("SELECT * FROM login" )
+    List<Login> getAllUsers();
+
+    @Query("SELECT * FROM login WHERE username = :search")
+    public List<Login> findUserWithName(String search);
+
+    @Query("SELECT * FROM login WHERE email = :search")
+    public List<Login> findUserWithEmail(String search);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUser (Login user);

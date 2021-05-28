@@ -72,7 +72,7 @@ public class HomePage extends AppCompatActivity implements NoteListener {
         mRecyclerView.setAdapter(notesAdapter);
         favsRecyclerView.setAdapter(favsAdapter);
 
-        getFavourites(REQUEST_CODE_SHOW_NOTES, false);
+        //getFavourites(REQUEST_CODE_SHOW_NOTES, false);
         getNotes(REQUEST_CODE_SHOW_NOTES, false);
 
         EditText inputSearch = findViewById(R.id.inputSearch);
@@ -113,7 +113,7 @@ public class HomePage extends AppCompatActivity implements NoteListener {
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
     }
 
-    private void getFavourites(final int requestCode, final boolean isNoteDeleted){
+    /*private void getFavourites(final int requestCode, final boolean isNoteDeleted){
         class getFavouritesText extends AsyncTask<Void, Void, List<Note>>{
             @Override
             protected List<Note> doInBackground(Void... voids) {
@@ -148,7 +148,7 @@ public class HomePage extends AppCompatActivity implements NoteListener {
             }
         }
         new getFavouritesText().execute();
-    }
+    }*/
 
     private void getNotes(final int requestCode, final boolean isNoteDeleted){
 
@@ -193,11 +193,11 @@ public class HomePage extends AppCompatActivity implements NoteListener {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
-            getFavourites(REQUEST_CODE_ADD_NOTE, false);
+            //getFavourites(REQUEST_CODE_ADD_NOTE, false);
             getNotes(REQUEST_CODE_ADD_NOTE, false);
         }else if(requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
             if(data != null){
-                getFavourites(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra( "isNoteDeleted", false));
+                //getFavourites(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra( "isNoteDeleted", false));
                 getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra( "isNoteDeleted", false));
             }
         }

@@ -69,26 +69,40 @@ public class MainActivity extends AppCompatActivity {
         if(userLogin == null){
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("ERROR");
-            builder.setMessage("El username/email y/o la contraseña no coinciden");
+            builder.setMessage("El username/email y/o la contraseña no coinciden o no existen.");
             builder.setPositiveButton("Aceptar", null);
 
             AlertDialog dialog = builder.create();
             dialog.show();
             return;
         }
-        
-        if(userLogin != null){
-            mainUser = userLogin.get(0);
+
+        try{
+            if(userLogin != null){
+                mainUser = userLogin.get(0);
+            }
         }
+        catch(IndexOutOfBoundsException e){
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("ERROR");
+            builder.setMessage("El username/email y/o la contraseña no coinciden o no existen.");
+            builder.setPositiveButton("Aceptar", null);
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return;
+        }
+
         
 
         if(mainUser.getPassword().equals(passwordText)){
+            loginViewModel.currentUser = mainUser;
             startActivity(new Intent(MainActivity.this, HomePage.class));
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("ERROR");
-            builder.setMessage("El username/email y/o la contraseña no coinciden");
+            builder.setMessage("El username/email y/o la contraseña no coinciden o no existen.");
             builder.setPositiveButton("Aceptar", null);
 
             AlertDialog dialog = builder.create();

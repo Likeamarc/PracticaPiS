@@ -13,19 +13,28 @@ import com.example.practicapis.database.FavouriteDatabase;
 import com.example.practicapis.database.NoteDatabase;
 import com.example.practicapis.entities.Note;
 import com.example.practicapis.listeners.NoteListener;
+import com.example.practicapis.viewmodel.LoginViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toolbar;
 
-public class HomePage extends AppCompatActivity implements NoteListener {
+public class HomePage extends AppCompatActivity implements NoteListener, NavigationView.OnNavigationItemSelectedListener {
     private RecyclerView mRecyclerView, favsRecyclerView;
     private List<Note> notesList;
     private List<Note> favouriteNotesList;
@@ -33,13 +42,26 @@ public class HomePage extends AppCompatActivity implements NoteListener {
     private static final int REQUEST_CODE_ADD_NOTE = 1;
     private static final int REQUEST_CODE_UPDATE_NOTE = 2;
     public static final int REQUEST_CODE_SHOW_NOTES = 3;
+    DrawerLayout drawerLayout;
+    LoginViewModel loginViewModel;
 
     private int noteClickedPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loginViewModel = LoginViewModel.get(getApplication());
         setContentView(R.layout.homescreen);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(findViewById(R.id.toolbar));
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
 
         FloatingActionButton addNote;
@@ -102,6 +124,37 @@ public class HomePage extends AppCompatActivity implements NoteListener {
          });
 
          */
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int title;
+        switch (menuItem.getItemId()) {
+            case R.id.nav_home:
+                startActivity(new Intent(HomePage.this, HomePage.class));
+                break;
+            case R.id.nav_settings:
+                startActivity(new Intent(HomePage.this, activity_settings.class));
+                break;
+            case R.id.nav_logout:
+                loginViewModel.currentUser = null;
+                startActivity(new Intent(HomePage.this, MainActivity.class));
+                break;
+            default:
+                throw new IllegalArgumentException("menu option not implemented!!");
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
     @Override

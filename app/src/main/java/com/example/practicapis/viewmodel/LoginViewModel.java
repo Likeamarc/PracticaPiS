@@ -28,9 +28,11 @@ public class LoginViewModel extends AndroidViewModel {
     private static LoginViewModel vmInstance;
     private LoginDatabase loginDatabase;
     public List<Login> usersListLiveData;
+    public Login currentUser;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
+        currentUser = null;
         loginDatabase = LoginDatabase.getInstance(application);
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
@@ -74,11 +76,21 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void deleteUser(Login login){
-        loginDatabase.loginDao().deleteUser(login);
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                loginDatabase.loginDao().deleteUser(login);
+            }
+        });
     }
 
     public void updateUser(Login login){
-        loginDatabase.loginDao().updateUser(login);
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                loginDatabase.loginDao().updateUser(login);
+            }
+        });
     }
 
 

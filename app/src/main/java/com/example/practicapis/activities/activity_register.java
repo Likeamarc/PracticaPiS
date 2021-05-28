@@ -1,21 +1,14 @@
 package com.example.practicapis.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.practicapis.R;
 import com.example.practicapis.entities.Login;
@@ -41,7 +34,7 @@ public class activity_register extends AppCompatActivity {
                 startActivity(new Intent(activity_register.this, MainActivity.class));
             }
         });
-        registerButton = (Button) findViewById(R.id.signUpButton);
+        registerButton = (Button) findViewById(R.id.applyChanges);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

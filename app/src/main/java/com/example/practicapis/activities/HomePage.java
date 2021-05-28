@@ -98,7 +98,7 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         getNotes(REQUEST_CODE_SHOW_NOTES, false);
 
         EditText inputSearch = findViewById(R.id.inputSearch);
-        /*
+
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -123,7 +123,7 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
             }
          });
 
-         */
+
     }
 
     @Override
@@ -166,7 +166,7 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
     }
 
-    /*private void getFavourites(final int requestCode, final boolean isNoteDeleted){
+    private void getFavourites(final int requestCode, final boolean isNoteDeleted){
         class getFavouritesText extends AsyncTask<Void, Void, List<Note>>{
             @Override
             protected List<Note> doInBackground(Void... voids) {
@@ -201,7 +201,7 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
             }
         }
         new getFavouritesText().execute();
-    }*/
+    }
 
     private void getNotes(final int requestCode, final boolean isNoteDeleted){
 

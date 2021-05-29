@@ -24,8 +24,6 @@ public class activity_settings extends AppCompatActivity implements NavigationVi
 
     DrawerLayout drawerLayout;
     public LoginViewModel loginViewModel;
-    public static final int REQUEST_USER_PASSWORD = 1;
-
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -36,8 +34,11 @@ public class activity_settings extends AppCompatActivity implements NavigationVi
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(findViewById(R.id.toolbar));
 
-        NavigationView navigationView = findViewById(R.id.navigation_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -151,7 +152,6 @@ public class activity_settings extends AppCompatActivity implements NavigationVi
             default:
                 throw new IllegalArgumentException("menu option not implemented!!");
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }

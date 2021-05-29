@@ -39,6 +39,9 @@
             android:name=".activities.activity_register"
             android:parentActivityName=".activities.MainActivity" />
         <activity
+            android:name=".activities.activity_settings"
+            android:parentActivityName=".activities.HomePage"/>
+        <activity
             android:name=".activities.HomePage"
             android:parentActivityName=".activities.MainActivity" />
         <activity

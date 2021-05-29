@@ -55,8 +55,11 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(findViewById(R.id.toolbar));
 
-        NavigationView navigationView = findViewById(R.id.navigation_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -140,19 +143,18 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         int title;
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-                startActivity(new Intent(HomePage.this, HomePage.class));
+                startActivity(new Intent(this, HomePage.class));
                 break;
             case R.id.nav_settings:
-                startActivity(new Intent(HomePage.this, activity_settings.class));
+                startActivity(new Intent(this, activity_settings.class));
                 break;
             case R.id.nav_logout:
                 loginViewModel.currentUser = null;
-                startActivity(new Intent(HomePage.this, MainActivity.class));
+                startActivity(new Intent(this, MainActivity.class));
                 break;
             default:
                 throw new IllegalArgumentException("menu option not implemented!!");
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }

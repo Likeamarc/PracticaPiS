@@ -103,7 +103,10 @@ public class activity_settings extends AppCompatActivity implements NavigationVi
         else{
             emailText = email.getText().toString();
         }
-        if(!password.getText().toString().equals("")){
+        if(password.getText().toString().equals("")){
+            passwordText = loginViewModel.currentUser.getPassword();
+        }
+        else{
             if(repeatPassword.getText().toString().equals("") || !repeatPassword.getText().equals(password.getText())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity_settings.this);
                 builder.setTitle("ERROR");
@@ -118,9 +121,7 @@ public class activity_settings extends AppCompatActivity implements NavigationVi
                 passwordText = password.getText().toString();
             }
         }
-        else if(password.getText().equals("")){
-            passwordText = loginViewModel.currentUser.getPassword();
-        }
+
 
         Login user = new Login(loginViewModel.currentUser.getUsername(), firstNameText, lastNameText, passwordText, emailText);
         loginViewModel.updateUser(user);

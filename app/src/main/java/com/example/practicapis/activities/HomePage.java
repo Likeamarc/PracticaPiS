@@ -5,13 +5,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.example.practicapis.R;
 import com.example.practicapis.adapters.NotesAdapter;
-import com.example.practicapis.database.FavouriteDatabase;
-import com.example.practicapis.database.NoteDatabase;
 import com.example.practicapis.entities.Note;
 import com.example.practicapis.listeners.NoteListener;
 import com.example.practicapis.viewmodel.LoginViewModel;
@@ -30,11 +27,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toolbar;
 
 public class HomePage extends AppCompatActivity implements NoteListener, NavigationView.OnNavigationItemSelectedListener {
     NotesViewModel notesViewModel;
@@ -107,7 +102,13 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         mRecyclerView.setAdapter(notesAdapter);
         favsRecyclerView.setAdapter(favsAdapter);
 
-        //getFavourites(REQUEST_CODE_SHOW_NOTES, false);
+        try {
+            getFavourites(REQUEST_CODE_SHOW_NOTES, false);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         try {
             getNotes(REQUEST_CODE_SHOW_NOTES, false);
         } catch (ExecutionException e) {
@@ -184,42 +185,36 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE);
     }
 
-    private void getFavourites(final int requestCode, final boolean isNoteDeleted){
-        class getFavouritesText extends AsyncTask<Void, Void, List<Note>>{
-            @Override
-            protected List<Note> doInBackground(Void... voids) {
-                return FavouriteDatabase.getDatabase(getApplicationContext()).favouriteDao().getAllFavourites();
-            }
+    private void getFavourites(final int requestCode, final boolean isNoteDeleted) throws ExecutionException, InterruptedException {
 
-            @Override
-            protected void onPostExecute(List<Note> FavNotes) {
-                super.onPostExecute(FavNotes);
-                if(requestCode == REQUEST_CODE_SHOW_NOTES){
-                    favouriteNotesList.addAll(FavNotes);
-                    favsAdapter.notifyDataSetChanged();
-                } else if(requestCode == REQUEST_CODE_ADD_NOTE){
-                    favouriteNotesList.add(0, FavNotes.get(0));
-                    favsAdapter.notifyItemInserted(0);
-                    mRecyclerView.smoothScrollToPosition(0);
-                } else if(requestCode == REQUEST_CODE_UPDATE_NOTE){
-                    favouriteNotesList.remove(noteClickedPosition);
-                    if(isNoteDeleted){
-                        favsAdapter.notifyItemRemoved(noteClickedPosition);
-                    }else{
-                        if(FavNotes.get(noteClickedPosition).getFavourite() == 1){
-                            favouriteNotesList.add(noteClickedPosition, FavNotes.get(noteClickedPosition));
-                        }else{
-                            notesList.add(noteClickedPosition, FavNotes.get(noteClickedPosition));
-                            FavNotes.remove(noteClickedPosition);
-                        }
+        List<Note> FavNotes = notesViewModel.getFavouritesList();
 
-                        favsAdapter.notifyItemChanged(noteClickedPosition);
-                    }
+        if(requestCode == REQUEST_CODE_SHOW_NOTES){
+            favouriteNotesList.addAll(FavNotes);
+            favsAdapter.notifyDataSetChanged();
+        } else if(requestCode == REQUEST_CODE_ADD_NOTE){
+            favouriteNotesList.add(0, FavNotes.get(0));
+            favsAdapter.notifyItemInserted(0);
+            mRecyclerView.smoothScrollToPosition(0);
+        } else if(requestCode == REQUEST_CODE_UPDATE_NOTE){
+            favouriteNotesList.remove(noteClickedPosition);
+            if(isNoteDeleted){
+                favsAdapter.notifyItemRemoved(noteClickedPosition);
+            }else{
+                if(FavNotes.get(noteClickedPosition).getFavourite() == 1){
+                    favouriteNotesList.add(noteClickedPosition, FavNotes.get(noteClickedPosition));
+                }else{
+                    notesList.add(noteClickedPosition, FavNotes.get(noteClickedPosition));
+                    FavNotes.remove(noteClickedPosition);
                 }
+
+                favsAdapter.notifyItemChanged(noteClickedPosition);
             }
         }
-        new getFavouritesText().execute();
-    }
+
+        }
+
+
 
     private void getNotes(final int requestCode, final boolean isNoteDeleted) throws ExecutionException, InterruptedException {
 

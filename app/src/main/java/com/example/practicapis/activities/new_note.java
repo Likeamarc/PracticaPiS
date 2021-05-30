@@ -1,7 +1,6 @@
  package com.example.practicapis.activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Patterns;
@@ -31,8 +29,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.practicapis.R;
-import com.example.practicapis.database.FavouriteDatabase;
-import com.example.practicapis.database.NoteDatabase;
 import com.example.practicapis.entities.Note;
 import com.example.practicapis.viewmodel.NotesViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -115,7 +111,7 @@ public class new_note extends AppCompatActivity {
             public void onClick(View v) {
                 favourite_false.setVisibility(View.GONE);
                 favourite_true.setVisibility(View.VISIBLE);
-                favourite = 0;
+                favourite = 1;
             }
         });
 
@@ -124,7 +120,7 @@ public class new_note extends AppCompatActivity {
             public void onClick(View v) {
                 favourite_true.setVisibility(View.GONE);
                 favourite_false.setVisibility(View.VISIBLE);
-                favourite = 1;
+                favourite = 0;
             }
         });
 
@@ -153,6 +149,14 @@ public class new_note extends AppCompatActivity {
         inputText.setText(alreadyExistingNote.getNoteText());
         dateTime.setText(alreadyExistingNote.getDateTime());
         textWebURL.setText(alreadyExistingNote.getWebLink());
+        if(alreadyExistingNote.getFavourite() == 0){
+            favourite_true.setVisibility(View.GONE);
+            favourite_false.setVisibility(View.VISIBLE);
+        }
+        else if(alreadyExistingNote.getFavourite() == 1){
+            favourite_false.setVisibility(View.GONE);
+            favourite_true.setVisibility(View.VISIBLE);
+        }
 
         if(!textWebURL.getText().equals("")){
             layoutWebURL.setVisibility(View.VISIBLE);

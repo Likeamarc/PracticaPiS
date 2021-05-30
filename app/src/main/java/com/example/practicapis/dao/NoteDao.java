@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface NoteDao {
 
-    @Query("SELECT * FROM notes ORDER BY title DESC" )
+    @Query("SELECT * FROM notes WHERE favourite = 0 ORDER BY title DESC" )
     List<Note> getAllNotes();
 
     @Query("SELECT * FROM notes WHERE favourite = 1")

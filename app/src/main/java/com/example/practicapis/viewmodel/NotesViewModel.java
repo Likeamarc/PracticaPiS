@@ -54,6 +54,18 @@ public class NotesViewModel extends AndroidViewModel {
         return noteList;
     }
 
+    public List<Note> getFavouritesList() throws ExecutionException, InterruptedException {
+        Future<List<Note>> futureNoteDatabase = Executors.newSingleThreadExecutor().submit(new Callable<List<Note>>() {
+            @Override
+            public List<Note> call() throws Exception {
+                return noteDatabase.noteDao().getAllFavouritesNotes();
+            }
+        });
+
+        noteList = futureNoteDatabase.get();
+        return noteList;
+    }
+
     public void insertNote(Note note){
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override

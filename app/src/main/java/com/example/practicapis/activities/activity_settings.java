@@ -20,6 +20,8 @@ import com.example.practicapis.entities.Login;
 import com.example.practicapis.viewmodel.LoginViewModel;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.concurrent.ExecutionException;
+
 public class activity_settings extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
@@ -45,7 +47,13 @@ public class activity_settings extends AppCompatActivity implements NavigationVi
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        loginViewModel = LoginViewModel.get(getApplication());
+        try {
+            loginViewModel = LoginViewModel.get(getApplication());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ImageView imageBack = findViewById(R.id.registerBackButton);
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override

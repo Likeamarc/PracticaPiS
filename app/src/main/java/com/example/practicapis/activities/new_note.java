@@ -2,6 +2,7 @@
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -33,6 +34,7 @@ import com.example.practicapis.R;
 import com.example.practicapis.database.FavouriteDatabase;
 import com.example.practicapis.database.NoteDatabase;
 import com.example.practicapis.entities.Note;
+import com.example.practicapis.viewmodel.NotesViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.InputStream;
@@ -58,11 +60,12 @@ public class new_note extends AppCompatActivity {
 
     private Note alreadyExistingNote;
 
-    private AlertDialog dialogDeleteNote;
     private AlertDialog dialogAddURL;
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
+
+    NotesViewModel notesViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class new_note extends AppCompatActivity {
     }
 
     private void initView(){
+
+        notesViewModel = NotesViewModel.get(getApplication());
 
         ImageView imageBack = findViewById(R.id.imageBack);
         imageBack.setOnClickListener(v -> onBackPressed());
@@ -161,11 +166,11 @@ public class new_note extends AppCompatActivity {
         }
     }
 
-    private void saveNote(){
-        if(inputTitle.getText().toString().trim().isEmpty()){
+    private void saveNote() {
+        if (inputTitle.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Note title can't be empty", Toast.LENGTH_LONG).show();
             return;
-        }else if (inputText.getText().toString().trim().isEmpty()){
+        } else if (inputText.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Note can't be empty", Toast.LENGTH_LONG).show();
             return;
         }
@@ -178,39 +183,24 @@ public class new_note extends AppCompatActivity {
         note.setImagePath(selectedImagePath);
         note.setFavourite(favourite);
 
-        if(layoutWebURL.getVisibility() == View.VISIBLE){
+        if (layoutWebURL.getVisibility() == View.VISIBLE) {
             note.setWebLink(textWebURL.getText().toString());
         }
 
 
-        if(alreadyExistingNote != null){
+        if (alreadyExistingNote != null) {
             note.setId(alreadyExistingNote.getId());
         }
 
-        @SuppressLint("StaticFieldLeak")
-        class saveNoteTask extends AsyncTask<Void, Void, Void>{
+        notesViewModel.insertNote(note);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        startActivity(new Intent(this, HomePage.class));
 
-            @Override
-            protected Void doInBackground(Void... voids){
-                if(favourite == 0) {
-                    NoteDatabase.getDatabase(getApplicationContext()).noteDao().insertNote(note);
-                }else{
-                    FavouriteDatabase.getDatabase(getApplicationContext()).favouriteDao().insertNote(note);
-                }
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        }
-
-        new saveNoteTask().execute();
     }
+
+
 
     private void initMiscellanious(){
         final LinearLayout layoutMiscellanious = findViewById(R.id.layout_miscelanious);
@@ -325,6 +315,8 @@ public class new_note extends AppCompatActivity {
                 }
             });
         }
+
+
     }
 
     private void selectImage(){
@@ -386,51 +378,23 @@ public class new_note extends AppCompatActivity {
     }
 
     private void showDeleteNoteDialog(){
-        if(dialogDeleteNote == null){
-            AlertDialog.Builder builder = new AlertDialog.Builder(new_note.this);
-            View view = getLayoutInflater().from(this).inflate(
-                    R.layout.layout_delete_note,
-                    (ViewGroup) findViewById(R.id.layoutDeleteNoteContainer)
-            );
-            builder.setView(view);
-            dialogDeleteNote = builder.create();
-            if(dialogDeleteNote.getWindow() != null){
-                dialogDeleteNote.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        AlertDialog.Builder builder = new AlertDialog.Builder(new_note.this);
+        builder.setTitle("Seguro que quieres eliminar la nota?");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                notesViewModel.deleteNote(alreadyExistingNote);
+                startActivity(new Intent(getApplicationContext(), HomePage.class));
             }
-            view.findViewById(R.id.deleteNote).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
 
-                    class DeleteNoteTask extends AsyncTask<Void, Void, Void>{
-
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            if(favourite == 1){
-                                FavouriteDatabase.getDatabase(getApplicationContext()).favouriteDao()
-                                        .deleteNote(alreadyExistingNote);
-                            }else{
-                                NoteDatabase.getDatabase(getApplicationContext()).noteDao()
-                                        .deleteNote(alreadyExistingNote);
-                            }
-                           return null;
-                        }
-
-                        @Override
-                        protected void onPostExecute(Void aVoid) {
-                            super.onPostExecute(aVoid);
-                            Intent intent = new Intent();
-                            intent.putExtra("isNoteDeleted", true);
-                            setResult(RESULT_OK, intent);
-                            finish();
-                        }
-                    }
-
-                    new DeleteNoteTask().execute();
-                }
-            });
-        }
-
-        dialogDeleteNote.show();
     }
 
     private void showDialogAddURL(){

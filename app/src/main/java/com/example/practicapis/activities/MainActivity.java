@@ -21,6 +21,7 @@ import com.example.practicapis.entities.Login;
 import com.example.practicapis.viewmodel.LoginViewModel;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Button buttonRegister, buttonSingIn;
         super.onCreate(savedInstanceState);
-        loginViewModel = LoginViewModel.get(getApplication());
+        try {
+            loginViewModel = LoginViewModel.get(getApplication());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         /*Twitter.initialize(this);*/
 
@@ -43,7 +50,13 @@ public class MainActivity extends AppCompatActivity {
         buttonSingIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAccount();
+                try {
+                    checkAccount();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -56,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void checkAccount(){
+    private void checkAccount() throws ExecutionException, InterruptedException {
         Login mainUser = null;
         EditText loginName = findViewById(R.id.user);
         EditText password = findViewById(R.id.password);

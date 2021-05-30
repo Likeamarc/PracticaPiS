@@ -14,6 +14,8 @@ import com.example.practicapis.R;
 import com.example.practicapis.entities.Login;
 import com.example.practicapis.viewmodel.LoginViewModel;
 
+import java.util.concurrent.ExecutionException;
+
 public class activity_register extends AppCompatActivity {
 
     public LoginViewModel loginViewModel;
@@ -26,7 +28,13 @@ public class activity_register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        loginViewModel = LoginViewModel.get(getApplication());
+        try {
+            loginViewModel = LoginViewModel.get(getApplication());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ImageView imageBack = findViewById(R.id.registerBackButton);
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override

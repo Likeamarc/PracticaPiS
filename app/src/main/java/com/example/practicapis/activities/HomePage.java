@@ -2,6 +2,7 @@ package com.example.practicapis.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import com.example.practicapis.database.NoteDatabase;
 import com.example.practicapis.entities.Note;
 import com.example.practicapis.listeners.NoteListener;
 import com.example.practicapis.viewmodel.LoginViewModel;
+import com.example.practicapis.viewmodel.NotesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -35,6 +37,7 @@ import android.widget.EditText;
 import android.widget.Toolbar;
 
 public class HomePage extends AppCompatActivity implements NoteListener, NavigationView.OnNavigationItemSelectedListener {
+    NotesViewModel notesViewModel;
     private RecyclerView mRecyclerView, favsRecyclerView;
     private List<Note> notesList;
     private List<Note> favouriteNotesList;
@@ -50,7 +53,14 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loginViewModel = LoginViewModel.get(getApplication());
+        try {
+            loginViewModel = LoginViewModel.get(getApplication());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        notesViewModel = NotesViewModel.get(getApplication());
         setContentView(R.layout.homescreen);
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(findViewById(R.id.toolbar));
@@ -98,7 +108,13 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         favsRecyclerView.setAdapter(favsAdapter);
 
         //getFavourites(REQUEST_CODE_SHOW_NOTES, false);
-        getNotes(REQUEST_CODE_SHOW_NOTES, false);
+        try {
+            getNotes(REQUEST_CODE_SHOW_NOTES, false);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         EditText inputSearch = findViewById(R.id.inputSearch);
 
@@ -205,55 +221,56 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         new getFavouritesText().execute();
     }
 
-    private void getNotes(final int requestCode, final boolean isNoteDeleted){
+    private void getNotes(final int requestCode, final boolean isNoteDeleted) throws ExecutionException, InterruptedException {
 
+        List<Note> temporalNoteList = notesViewModel.getNoteList();
+        if(requestCode == REQUEST_CODE_SHOW_NOTES){
+            notesList.addAll(temporalNoteList);
+            notesAdapter.notifyDataSetChanged();
+        } else if(requestCode == REQUEST_CODE_ADD_NOTE){
+            notesList.add(0, temporalNoteList.get(0));
+            notesAdapter.notifyItemInserted(0);
+            mRecyclerView.smoothScrollToPosition(0);
+        } else if(requestCode == REQUEST_CODE_UPDATE_NOTE){
+            notesList.remove(noteClickedPosition);
 
-        class getNotesText extends AsyncTask<Void, Void, List<Note>>{
-            @Override
-            protected List<Note> doInBackground(Void... voids) {
-                return NoteDatabase.getDatabase(getApplicationContext()).noteDao().getAllNotes();
-            }
-
-            @Override
-            protected void onPostExecute(List<Note> notes) {
-                super.onPostExecute(notes);
-                if(requestCode == REQUEST_CODE_SHOW_NOTES){
-                    notesList.addAll(notes);
-                    notesAdapter.notifyDataSetChanged();
-                } else if(requestCode == REQUEST_CODE_ADD_NOTE){
-                    notesList.add(0, notes.get(0));
-                    notesAdapter.notifyItemInserted(0);
-                    mRecyclerView.smoothScrollToPosition(0);
-                } else if(requestCode == REQUEST_CODE_UPDATE_NOTE){
+            if(isNoteDeleted){
+                notesAdapter.notifyItemRemoved(noteClickedPosition);
+            }else{
+                if(notesList.get(noteClickedPosition).getFavourite() == 1){
+                    favouriteNotesList.add(noteClickedPosition, notesList.get(noteClickedPosition));
+                }else{
+                    notesList.add(noteClickedPosition, notesList.get(noteClickedPosition));
                     notesList.remove(noteClickedPosition);
-
-                    if(isNoteDeleted){
-                        notesAdapter.notifyItemRemoved(noteClickedPosition);
-                    }else{
-                        if(notes.get(noteClickedPosition).getFavourite() == 1){
-                            favouriteNotesList.add(noteClickedPosition, notes.get(noteClickedPosition));
-                        }else{
-                            notesList.add(noteClickedPosition, notes.get(noteClickedPosition));
-                            notes.remove(noteClickedPosition);
-                        }
-                        notesAdapter.notifyItemChanged(noteClickedPosition);
-                    }
                 }
+                notesAdapter.notifyItemChanged(noteClickedPosition);
             }
         }
-        new getNotesText().execute();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
             //getFavourites(REQUEST_CODE_ADD_NOTE, false);
-            getNotes(REQUEST_CODE_ADD_NOTE, false);
+            try {
+                getNotes(REQUEST_CODE_ADD_NOTE, false);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }else if(requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
             if(data != null){
                 //getFavourites(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra( "isNoteDeleted", false));
-                getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra( "isNoteDeleted", false));
+                try {
+                    getNotes(REQUEST_CODE_UPDATE_NOTE, data.getBooleanExtra( "isNoteDeleted", false));
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

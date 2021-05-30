@@ -21,7 +21,10 @@ import com.example.practicapis.entities.Login;
 import com.example.practicapis.entities.Note;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 public class LoginViewModel extends AndroidViewModel {
@@ -30,21 +33,16 @@ public class LoginViewModel extends AndroidViewModel {
     public List<Login> usersListLiveData;
     public Login currentUser;
 
-    public LoginViewModel(@NonNull Application application) {
+    public LoginViewModel(@NonNull Application application) throws ExecutionException, InterruptedException {
         super(application);
         currentUser = null;
         loginDatabase = LoginDatabase.getInstance(application);
-        Executors.newSingleThreadExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                usersListLiveData = loginDatabase.loginDao().getAllUsers();
-            }
-        });
+        getUsersListLiveData();
 
     }
 
     @MainThread
-    public static LoginViewModel get(@NonNull Application application){
+    public static LoginViewModel get(@NonNull Application application) throws ExecutionException, InterruptedException {
         if(vmInstance == null){
             vmInstance = new LoginViewModel(application);
         }
@@ -52,18 +50,39 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
 
-    public List<Login> getUsersListLiveData(){
-        usersListLiveData = loginDatabase.loginDao().getAllUsers();
+    public List<Login> getUsersListLiveData() throws ExecutionException, InterruptedException {
+        Future<List<Login>> futureLoginList = Executors.newSingleThreadExecutor().submit(new Callable<List<Login>>() {
+            @Override
+            public List<Login> call() throws Exception {
+                return loginDatabase.loginDao().getAllUsers();
+            }
+        });
+
+        usersListLiveData = futureLoginList.get();
         return usersListLiveData;
 
     }
 
-    public List<Login> getUsersWithEmail(String search){
-        return loginDatabase.loginDao().findUserWithEmail(search);
+    public List<Login> getUsersWithEmail(String search) throws ExecutionException, InterruptedException {
+        Future<List<Login>> futureEmailsList = Executors.newSingleThreadExecutor().submit(new Callable<List<Login>>() {
+            @Override
+            public List<Login> call() throws Exception {
+                return loginDatabase.loginDao().findUserWithEmail(search);
+            }
+        });
+
+        return futureEmailsList.get();
     }
 
-    public List<Login> getUsersWithUsername(String search){
-        return loginDatabase.loginDao().findUserWithName(search);
+    public List<Login> getUsersWithUsername(String search) throws ExecutionException, InterruptedException {
+        Future<List<Login>> futureUserList = Executors.newSingleThreadExecutor().submit(new Callable<List<Login>>() {
+            @Override
+            public List<Login> call() throws Exception {
+                return loginDatabase.loginDao().findUserWithName(search);
+            }
+        });
+
+        return futureUserList.get();
     }
 
     public void insertUser(Login login){

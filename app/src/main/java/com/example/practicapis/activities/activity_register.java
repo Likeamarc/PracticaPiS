@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.practicapis.R;
 import com.example.practicapis.entities.Login;
@@ -28,8 +30,9 @@ public class activity_register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
         try {
-            loginViewModel = LoginViewModel.get(getApplication());
+            loginViewModel =  LoginViewModel.get(getApplication());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

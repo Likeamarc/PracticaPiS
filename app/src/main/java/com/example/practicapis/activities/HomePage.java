@@ -58,7 +58,8 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
         notesViewModel = NotesViewModel.get(getApplication());
         setContentView(R.layout.homescreen);
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(findViewById(R.id.toolbar));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.bringToFront();

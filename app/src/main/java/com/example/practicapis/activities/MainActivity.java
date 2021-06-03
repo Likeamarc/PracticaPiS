@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonRegister, buttonSingIn;
         super.onCreate(savedInstanceState);
         try {
-            loginViewModel = new LoginViewModel(getApplication());
+            loginViewModel = LoginViewModel.get(getApplication());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        if(loginViewModel.usersListLiveData.size() > 0){
-            startActivity(new Intent(MainActivity.this, HomePage.class));
+
+        if(loginViewModel.currentUser != null){
+                startActivity(new Intent(MainActivity.this, HomePage.class));
         }else{
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
+
 
     }
 

@@ -156,7 +156,7 @@ public class activity_settings extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_logout:
                 loginViewModel.currentUser = null;
-                startActivity(new Intent(activity_settings.this, MainActivity.class));
+                startActivity(new Intent(activity_settings.this, LoginActivity.class));
                 break;
             default:
                 throw new IllegalArgumentException("menu option not implemented!!");

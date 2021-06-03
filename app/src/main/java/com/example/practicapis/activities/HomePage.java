@@ -168,7 +168,7 @@ public class HomePage extends AppCompatActivity implements NoteListener, Navigat
                 break;
             case R.id.nav_logout:
                 loginViewModel.currentUser = null;
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             default:
                 throw new IllegalArgumentException("menu option not implemented!!");

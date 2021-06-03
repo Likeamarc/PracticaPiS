@@ -20,7 +20,9 @@
             android:id="@+id/toolbar"
             android:layout_height="?attr/actionBarSize"
             android:layout_width="match_parent"
-            android:background="@color/gray"/>
+            android:background="#EEEEEE">
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <ImageView
             android:id="@+id/registerBackButton"
@@ -29,7 +31,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:contentDescription="@string/app_name"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
